@@ -1,0 +1,8 @@
+Vorschlag:
+    - 3 Main GUIs -> NormalBenuzer, Admin und HR, login
+           - NormalBenutzer zeigt die Mitarbeitertabelle an -> verändert sich im Verlauf von den Mitarbeiter inputs.
+           - Admin und HR zeigt die bearbeitungs Tools an -> verändern sich im Verlauf von den Admin/HR inputs.
+           - login -> login Fenster -> Übergang NormalBenutzer -> Admin und HR Fenster.
+
+    - oder wir machen es genau so wie in der Aufgabenstellung (kompliziert, nicht genau erklärt) / mit files/Klassendiagramm.jpg
+    - oder wir machen so, dass sich jeder einloggt -> Bei Programmstart login Fenster -> ein mainGUI.
