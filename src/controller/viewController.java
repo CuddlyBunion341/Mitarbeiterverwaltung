@@ -6,7 +6,6 @@ import view.LoggedIn;
 import view.LoggedOut;
 
 public class ViewController {
-
     public void start(){
         LoggedOut  loggedOut = new LoggedOut();
         LogIn logIn = new LogIn();
