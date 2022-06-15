@@ -3,6 +3,7 @@ Vorschlag:
            - NormalBenutzer zeigt die Mitarbeitertabelle an -> verändert sich im Verlauf von den Mitarbeiter inputs.
            - Admin und HR zeigt die bearbeitungs Tools an -> verändern sich im Verlauf von den Admin/HR inputs.
            - login -> login Fenster -> Übergang NormalBenutzer -> Admin und HR Fenster.
+                -> Wir könnten auch eine Klasse mit einem getMitarbeiterListe machen -> Damit wir diese in NormalBenutzer und Admin / Hr verwenden können??
 
     - oder wir machen es genau so wie in der Aufgabenstellung (kompliziert, nicht genau erklärt) / mit files/Klassendiagramm.jpg
     - oder wir machen so, dass sich jeder einloggt -> Bei Programmstart login Fenster -> ein mainGUI.
