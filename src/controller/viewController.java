@@ -1,6 +1,5 @@
 package controller;
 
-import sun.rmi.runtime.Log;
 import view.Bridge;
 import view.LogIn;
 import view.LoggedIn;

@@ -36,4 +36,9 @@ public class LoggedOut extends JFrame {
     public void setBridge(Bridge bridge) {
         this.bridge = bridge;
     }
+
+    public JTable getMitarbeiterListe(){
+        JTable table = new JTable();
+        return table;
+    }
 }
