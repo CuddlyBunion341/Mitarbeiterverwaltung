@@ -1,5 +1,6 @@
 package controller;
 
+import sun.rmi.runtime.Log;
 import view.Bridge;
 import view.LogIn;
 import view.LoggedIn;
@@ -9,18 +10,22 @@ public class ViewController {
 
     public void start(){
         LoggedOut  loggedOut = new LoggedOut();
+        LogIn logIn = new LogIn();
+        logIn.setVisible(false);
         Bridge transmition = new Bridge() {
             @Override
             public void loginPressed(int value) {
                 if (value == 0){
-                    LogIn login = new LogIn();
+                    logIn.setVisible(true);
                 }
                 else{
                     LoggedIn loggedIn = new LoggedIn();
                     loggedOut.dispose();
+                    logIn.dispose();
                 }
             }
         };
         loggedOut.setBridge(transmition);
+        logIn.setBridge(transmition);
     }
 }
