@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Main extends JFrame {
     private JTabbedPane tabbedPanel;
@@ -45,8 +46,8 @@ class UebersichtPanel extends JPanel {
     // detail
     private JTextField nameFeld;
     private JTextField abteilungFeld;
-    private JList funktionenList;
-    private JList teamsList;
+    private JList funktionenListe;
+    private JList teamsListe;
     private JLabel personBild;
     
     public UebersichtPanel() {
@@ -55,15 +56,32 @@ class UebersichtPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Personen Panel
-        JPanel personenPanel = Util.createFieldset("Personen");
-        personenPanel.setLayout(new GridLayout(1, 2));
-        JPanel persLinks = new JPanel();
-        persLinks.setLayout(new BoxLayout(persLinks, BoxLayout.Y_AXIS));
-        personenPanel.add(persLinks);
+        JPanel personenPanel = Util.fieldset("Personen");
+        personenPanel.setLayout(new BorderLayout());
+        JPanel persLinks = new JPanel(new BorderLayout());
+        JScrollPane persScroll = Util.scrollPane("Übersicht", personenListe);
+        persLinks.add(persScroll, BorderLayout.CENTER);
+        persLinks.add(nameFilter, BorderLayout.SOUTH);
+
+
+        personenPanel.add(persLinks, BorderLayout.WEST);
         // Detail Panel
-        JPanel detailPanel = Util.createFieldset("Detail");
-        detailPanel.setLayout(new GridLayout(4,2));
-        personenPanel.add(detailPanel);
+        JPanel detailPanel = Util.fieldset("Detail");
+        detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.Y_AXIS));
+        JPanel detailOben = new JPanel(new GridLayout(2,2));
+        detailOben.add(new JLabel("Name: "));
+        detailOben.add(nameFeld);
+        detailOben.add(new JLabel("Abteilung: "));
+        detailOben.add(abteilungFeld);
+        detailPanel.add(detailOben);
+        JPanel detailUnten = new JPanel(new GridLayout(1,2));
+        JScrollPane funktionenScroll = Util.scrollPane("Funktionen", funktionenListe);
+        detailUnten.add(funktionenScroll);
+        JScrollPane teamsScroll = Util.scrollPane("Teams", teamsListe);
+        detailUnten.add(teamsScroll);
+        detailPanel.add(detailUnten);
+
+        personenPanel.add(detailPanel, BorderLayout.CENTER);
         add(personenPanel, BorderLayout.PAGE_START);
 
 
@@ -71,7 +89,7 @@ class UebersichtPanel extends JPanel {
         unterePanel.setLayout(new GridLayout(1, 2));
 
         // Sortier Panel
-        JPanel sortPanel = Util.createFieldset("Sortierung");
+        JPanel sortPanel = Util.fieldset("Sortierung");
         sortierung = new ButtonGroup();
         sortierung.add((AbstractButton) sortPanel.add(new JRadioButton("keine")));
         sortierung.add((AbstractButton) sortPanel.add(new JRadioButton("A-Z")));
@@ -79,7 +97,7 @@ class UebersichtPanel extends JPanel {
         unterePanel.add(sortPanel);
 
         // Filter Panel
-        JPanel filterPanel = Util.createFieldset("Filter");
+        JPanel filterPanel = Util.fieldset("Filter");
         filterPanel.setLayout(new GridLayout(3, 2));
         filterPanel.add(new JLabel("Abteilung"));
         filterPanel.add(abteilungFilter);
@@ -98,14 +116,18 @@ class UebersichtPanel extends JPanel {
         abteilungFilter = new JComboBox<>(new String[]{"- alle -","Logistik", "IT", "Marketing", "Produktion"});
         funktionFilter = new JComboBox<>(new String[]{"- alle -", "Manager", "Mitarbeiter", "Assistent"});
         teamFilter = new JComboBox<>(new String[]{"- alle -", "Next Facility", "IT", "Marketing", "Produktion"});
-        nameFilter = new JTextField();
-        personenListe = new JList<>(new String[]{"Person 1", "Person 2", "Person 3", "Person 4", "Person 5"});
+        nameFilter = new JTextField("Name eingeben");
+        java.util.List<String> personen = new ArrayList<>();
+        for (int i = 0 ; i < 30; i++) {
+            personen.add("Person " + i);
+        }
 
+        personenListe = new JList<>(personen.toArray());
         // detail
         nameFeld = new JTextField();
         abteilungFeld = new JTextField();
-        funktionenList = new JList<>();
-        teamsList = new JList<>();
+        funktionenListe = new JList<>(new String[]{"Controller","Betriebs-Sani"});
+        teamsListe = new JList<>(new String[]{"More cash","New Customer","Idea 3000","Leitbild"});
         personBild = new JLabel();
     }
 }
