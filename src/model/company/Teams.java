@@ -23,4 +23,7 @@ public class Teams {
             designations.remove(index);
         }
     }
+    public String getName() {
+        return null;
+    }
 }
