@@ -23,4 +23,7 @@ public class JobFunctions {
             designations.remove(index);
         }
     }
+    public String getName() {
+        return null;
+    }
 }
