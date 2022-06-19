@@ -2,6 +2,8 @@ package model.company;
 
 import java.util.Vector;
 
+import javax.swing.AbstractListModel;
+
 public class Teams {
 
     private Vector<String> designations = new Vector<String>();

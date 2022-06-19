@@ -1,11 +1,15 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.text.html.StyleSheet.BoxPainter;
+
 import java.awt.*;
 import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
-    private JTabbedPane tabbedPanel;
+    private JTabbedPane tabbedPane;
     private UebersichtPanel uebersichtPanel;
     private ZuordnungPanel zuordnungPanel;
     private PersonenPanel personenPanel;
@@ -22,20 +26,32 @@ public class MainFrame extends JFrame {
     }
 
     private void init() {
-        tabbedPanel = new JTabbedPane();
+        tabbedPane = new JTabbedPane();
+        JFrame f = this;
         uebersichtPanel = new UebersichtPanel();
         zuordnungPanel = new ZuordnungPanel();
         personenPanel = new PersonenPanel();
         stammdatenPanel = new StammdatenPanel();
         logBuchPanel = new LogBuchPanel();
-        tabbedPanel.addTab("Uebersicht", uebersichtPanel);
-        tabbedPanel.addTab("Zuordnung", zuordnungPanel);
-        tabbedPanel.addTab("Personen", personenPanel);
-        tabbedPanel.addTab("Stammdaten", stammdatenPanel);
-        tabbedPanel.addTab("LogBuch", logBuchPanel);
-        tabbedPanel.setForeground(Color.BLACK);
-        add(tabbedPanel);
-        getContentPane().add(tabbedPanel);
+        tabbedPane.addTab("Uebersicht", uebersichtPanel);
+        tabbedPane.addTab("Zuordnung", zuordnungPanel);
+        tabbedPane.addTab("Personen", personenPanel);
+        tabbedPane.addTab("Stammdaten", stammdatenPanel);
+        tabbedPane.addTab("LogBuch", logBuchPanel);
+        tabbedPane.setForeground(Color.BLACK);
+
+        final Dimension originalTabsDim = tabbedPane.getPreferredSize();
+        tabbedPane.addChangeListener(new ChangeListener(){
+
+            @Override
+            public void stateChanged(ChangeEvent arg0) {
+                Component mCompo=tabbedPane.getSelectedComponent();
+                tabbedPane.setPreferredSize(mCompo.getPreferredSize());
+                f.pack();
+            }   
+        });
+        add(tabbedPane);
+        getContentPane().add(tabbedPane);
     }
 
     public static void main(String[] args) {
@@ -76,22 +92,23 @@ class UebersichtPanel extends JPanel {
         personenPanel.add(persLinks, BorderLayout.WEST);
         // Detail Panel
         JPanel detailPanel = Util.fieldset("Detail");
-        detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.Y_AXIS));
+        detailPanel.setLayout(new BorderLayout());
         JPanel detailOben = new JPanel(new GridLayout(2,2));
         detailOben.add(new JLabel("Name: "));
         detailOben.add(nameFeld);
         detailOben.add(new JLabel("Abteilung: "));
         detailOben.add(abteilungFeld);
-        detailPanel.add(detailOben);
         JPanel detailUnten = new JPanel(new GridLayout(1,2));
         JScrollPane funktionenScroll = Util.scrollPane("Funktionen", funktionenListe);
         detailUnten.add(funktionenScroll);
         JScrollPane teamsScroll = Util.scrollPane("Teams", teamsListe);
         detailUnten.add(teamsScroll);
-        detailPanel.add(detailUnten);
+        //
+        detailPanel.add(detailOben, BorderLayout.NORTH);
+        detailPanel.add(detailUnten, BorderLayout.CENTER);
 
         personenPanel.add(detailPanel, BorderLayout.CENTER);
-        add(personenPanel, BorderLayout.PAGE_START);
+        add(personenPanel, BorderLayout.CENTER);
 
 
         JPanel unterePanel = new JPanel();
@@ -191,6 +208,7 @@ class PersonenPanel extends JPanel {
     private JTextField nameFeld;
     private JCheckBox hrCheckBox;
     private JCheckBox adminCheckBox;
+    private JLabel bild;
     private JButton addBtn;
     private JButton loeschBtn;
     private JButton bearbeitBtn;
@@ -205,27 +223,32 @@ class PersonenPanel extends JPanel {
         ListenBearbeitungPanel auswahlPanel = new ListenBearbeitungPanel(personenListe,"Übersicht");
 
         JPanel detailPanel = Util.fieldset("Detail");
-        detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.Y_AXIS));
-        JPanel detailOben = new JPanel(new GridLayout(1,2));
-        detailOben.add(new JLabel("Name: "));
-        detailOben.add(nameFeld);
-        detailPanel.add(detailOben);
-        detailPanel.add(hrCheckBox);
-        detailPanel.add(adminCheckBox);
+        detailPanel.setLayout(new BorderLayout());
+        JPanel detailContent = new JPanel(new GridLayout(4,2));
+        detailContent.add(new JLabel("Name: "));
+        detailContent.add(nameFeld);
+        detailContent.add(new JLabel("[Auswaehlen]"));
+        detailContent.add(bild);
+        detailContent.add(new JLabel("HR"));
+        detailContent.add(hrCheckBox);
+        detailContent.add(new JLabel("Admin"));
+        detailContent.add(adminCheckBox);
+
+        detailPanel.add(detailContent,BorderLayout.NORTH);
 
         mainPanel.add(auswahlPanel, BorderLayout.WEST);
         mainPanel.add(detailPanel, BorderLayout.CENTER);
         add(mainPanel, BorderLayout.CENTER);
     }
-
     private void init() {
         personenListe = new JList<>(new String[]{"Person 1", "Person 2", "Person 3"});
         nameFeld = new JTextField();
-        hrCheckBox = new JCheckBox("HR");
-        adminCheckBox = new JCheckBox("Admin");    
+        hrCheckBox = new JCheckBox();
+        adminCheckBox = new JCheckBox();    
         addBtn = new JButton("+");
         loeschBtn = new JButton("x");
         bearbeitBtn = new JButton("E");
+        bild = new JLabel("Bild");
     }
 }
 
@@ -243,15 +266,19 @@ class StammdatenPanel extends JPanel {
         super();
         init();
 
-        setLayout(new GridLayout(4,2));
-        add(new JLabel("Firma: "));
-        add(firmaFeld);
-        add(new JLabel("Abteilungen: "));
-        add(abteilungenPanel);
-        add(new JLabel("Funktionen: "));
-        add(funktionenPanel);
-        add(new JLabel("Teams: "));
-        add(teamsPanel);
+        setLayout(new BorderLayout());
+        JPanel top = new JPanel(new GridLayout(1,2));
+        top.add(new JLabel("Firma: "));
+        top.add(firmaFeld);
+        JPanel bottom = new JPanel(new GridLayout(3,2));
+        bottom.add(new JLabel("Abteilungen: "));
+        bottom.add(abteilungenPanel);
+        bottom.add(new JLabel("Funktionen: "));
+        bottom.add(funktionenPanel);
+        bottom.add(new JLabel("Teams: "));
+        bottom.add(teamsPanel);
+        add(top, BorderLayout.PAGE_START);
+        add(bottom, BorderLayout.CENTER);
     }
 
     private void init() {
@@ -274,6 +301,7 @@ class LogBuchPanel extends JPanel {
         super();
         setLayout(new BorderLayout());
         logBuch = new JTextArea();
+        logBuch.setColumns(50);
         for (int i = 0; i < 50; i++) {
             logBuch.append("[2022-05-07 11:32:16.113] Logbuch Eintrag Test " + i + "\n");
         }
