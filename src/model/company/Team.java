@@ -4,11 +4,11 @@ import java.util.Vector;
 
 import javax.swing.AbstractListModel;
 
-public class Teams {
+public class Team {
 
     private Vector<String> designations = new Vector<String>();
 
-    public Teams(){}
+    public Team(){}
     public void addTeam(String function){
         if (!designations.contains(function)){
             designations.add(function);
