@@ -9,7 +9,8 @@ public class Person {
     private boolean isAdmin;
     private boolean isHr;
     private Vector<String> teams;
-    private Vector<String> roles;
+    private Vector<String> functions;
+    private String department;
     private int passwordHash;
 
     public Person(String fName, String lName, String photoPath) {
@@ -71,11 +72,11 @@ public class Person {
     }
 
     public Vector<String> getRoles() {
-        return this.roles;
+        return this.functions;
     }
 
     public void setRoles(Vector<String> roles) {
-        this.roles = roles;
+        this.functions = roles;
     }
 
     public boolean authenticate(String password) {
@@ -92,6 +93,14 @@ public class Person {
 
     public String toString() {
         return this.firstName + " " + this.lastName;
+    }
+
+    public String getDepartment() {
+        return this.department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
 }
