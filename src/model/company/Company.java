@@ -15,6 +15,11 @@ public class Company {
         employees = DataHandler.getEmployees();
         teams = DataHandler.getTeams();
         departments = DataHandler.getDepartments();
+
+        Person hans = new Person("Hans", "Jansen", "hans.png");
+        hans.setPassword("123");
+        hans.setAdmin(true);
+        hans.setHr(true);
     }
 
     public Vector<Person> getEmployees() {
@@ -24,7 +29,6 @@ public class Company {
     public Vector<Team> getTeams() {
         return teams;
     }
-
 
     public Vector<Department> getDepartments() {
         return this.departments;
