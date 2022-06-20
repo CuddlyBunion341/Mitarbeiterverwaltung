@@ -11,10 +11,11 @@ import view.LoggedIn;
 import view.LoggedOut;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.Vector;
 
 public class ViewController extends JFrame implements ActionListener {
     Login login = new Login();
@@ -34,6 +35,38 @@ public class ViewController extends JFrame implements ActionListener {
         frame = new MainFrame(company,person.isHr(),person.isAdmin());
         frame.setVisible(true);
         JTabbedPane tabs = frame.getTabbedPane();
+        frame.getOverviewTab().getEmployeeList().setListData(company.getEmployees());
+        frame.getOverviewTab().getFunctionList().setListData(new Vector());
+        frame.getOverviewTab().getTeamList().setListData(new Vector());
+        frame.getOverviewTab().getEmployeeList().addListSelectionListener(new listSelection());
+        frame.getOverviewTab().getNameFilter().getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                update(e);
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                update(e);
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                update(e);
+            }
+            public void update(DocumentEvent e){
+                if (frame.getOverviewTab().getNameFilter().getText().equals("")){
+                    frame.getOverviewTab().getEmployeeList().setListData(company.getEmployees());
+                }
+                else{
+                    Vector<Person> result = new Vector<Person>();
+                    for (int i = 0; i < company.getEmployees().size(); i++){
+                        if (company.getEmployees().get(i).getName().toLowerCase(Locale.ROOT).contains(frame.getOverviewTab().getNameFilter().getText())){
+                            result.add(company.getEmployees().get(i));
+                        }
+                    }
+                    frame.getOverviewTab().getEmployeeList().setListData(result);
+                }
+            }
+        });
     }
 
     @Override
@@ -67,12 +100,14 @@ public class ViewController extends JFrame implements ActionListener {
         @Override
         public void valueChanged(ListSelectionEvent e) {
             try{
-                Person person = (Person)(frame.getOverviewTab().getEmployeeList().getSelectedValue());
-
+                Person person = company.getEmployees().get(frame.getOverviewTab().getEmployeeList().getSelectedIndex());
+                frame.getOverviewTab().getNameField().setText(person.getName());
+                //frame.getOverviewTab().getDepartmentField().setText(person.getDepartment);
+                frame.getOverviewTab().getFunctionList().setListData(person.getRoles());
+                frame.getOverviewTab().getTeamList().setListData(person.getTeams());
             }
             catch (ArrayIndexOutOfBoundsException ignored){}
         }
     }
-
 
 }
