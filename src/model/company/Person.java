@@ -2,8 +2,6 @@ package model.company;
 
 import java.util.Vector;
 
-import model.Team;
-
 public class Person {
     private String photoPath;
     private String firstName;
@@ -12,6 +10,7 @@ public class Person {
     private boolean isHr;
     private Vector<Team> teams;
     private Vector<String> roles;
+    private String password;
 
     public Person(String fName, String lName, String photoPath) {
         this.firstName = fName;
@@ -37,6 +36,10 @@ public class Person {
 
     public String getLastName() {
         return this.lastName;
+    }
+
+    public String getName() {
+        return this.firstName + " " + this.lastName;
     }
 
     public void setLastName(String lastName) {
@@ -73,6 +76,10 @@ public class Person {
 
     public void setRoles(Vector<String> roles) {
         this.roles = roles;
+    }
+
+    public boolean authenticate(String password) {
+        return this.password.equals(password);
     }
 
 }
