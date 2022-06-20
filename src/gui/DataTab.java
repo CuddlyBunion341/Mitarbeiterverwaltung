@@ -20,17 +20,20 @@ public class DataTab extends JPanel {
     private ListEditPanel functionsPanel;
     private ListEditPanel teamsPanel;
 
+    private Company model;
+
     public DataTab(Company model) {
         super();
+        this.model = model;
         init();
         build();
     }
 
     private void init() {
         companyNameField = new JTextField();
-        departmentList = new JList<>(new String[]{"Logistik", "IT", "Marketing", "Produktion"});
-        functionsList = new JList<>(new String[]{"Controller", "Betriebs-Sani"});
-        teamsList = new JList<>(new String[]{"More cash", "New Customer", "Idea 3000", "Leitbild"});
+        departmentList = new JList<>(model.getDepartments());
+        functionsList = new JList<>(model.getFunctions());
+        teamsList = new JList<>(model.getTeams());
 
         departmentPanel = new ListEditPanel(departmentList);
         functionsPanel = new ListEditPanel(functionsList);

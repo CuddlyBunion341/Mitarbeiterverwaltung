@@ -39,4 +39,13 @@ public class Company {
     public String getCompanyName() {
         return this.companyName;
     }
+
+    public Vector<String> getFunctions() {
+        Vector<String> functions = new Vector<>();
+        functions.add("HR");
+        functions.add("Admin");
+        functions.add("Developer");
+        functions.add("Tester");
+        return null;
+    }
 }

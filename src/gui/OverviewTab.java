@@ -31,9 +31,12 @@ public class OverviewTab extends JPanel {
     private JList functionList;
     private JList teamList;
     private JLabel imageLabel;
+
+    private Company model;
     
     public OverviewTab(Company model) {
         super();
+        this.model = model;
         init();
         setLayout(new BorderLayout());
         build();
@@ -99,9 +102,9 @@ public class OverviewTab extends JPanel {
     private void init() {
         // personenliste
         sortGroup = new ButtonGroup();
-        departmentFilter = new JComboBox<>(new String[]{"- alle -","Logistik", "IT", "Marketing", "Produktion"});
-        functionFilter = new JComboBox<>(new String[]{"- alle -", "Manager", "Mitarbeiter", "Assistent"});
-        teamFilter = new JComboBox<>(new String[]{"- alle -", "Next Facility", "IT", "Marketing", "Produktion"});
+        departmentFilter = new JComboBox<>(model.getDepartments());
+        functionFilter = new JComboBox<>(model.getFunctions());
+        teamFilter = new JComboBox<>(model.getTeams());
         nameFilter = new JTextField("Name eingeben");
         java.util.List<String> employees = new ArrayList<>();
         for (int i = 0 ; i < 30; i++) {
@@ -112,8 +115,8 @@ public class OverviewTab extends JPanel {
         // detail
         nameField = new JTextField();
         departmentField = new JTextField();
-        functionList = new JList<>(new String[]{"Controller","Betriebs-Sani"});
-        teamList = new JList<>(new String[]{"More cash","New Customer","Idea 3000","Leitbild"});
+        functionList = new JList<>(model.getFunctions());
+        teamList = new JList<>(model.getTeams());
         imageLabel = new JLabel();
     }
 

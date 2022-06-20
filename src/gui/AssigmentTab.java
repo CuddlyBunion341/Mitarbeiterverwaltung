@@ -17,22 +17,21 @@ public class AssigmentTab extends JPanel {
     private JTextField departmentField;
     private JComboBox functionsBox;
     private JComboBox teamsBox;
+    private Company model;
+
     public AssigmentTab(Company model) {
         super();
+        this.model = model;
         init();
         build();
     }
 
     private void init() {
-        String[] employees = new String[50];
-        for (int i = 0; i < 50; i++) {
-            employees[i] = "Person " + i;
-        }
-        employeeList = new JList<String>(employees);
+        employeeList = new JList<>(model.getEmployees());
         nameField = new JTextField();
         departmentField = new JTextField();
-        functionsBox = new JComboBox<>(new String[]{"Controller","Betriebs-Sani"});
-        teamsBox = new JComboBox<>(new String[]{"More cash","New Customer","Idea 3000","Leitbild"});
+        functionsBox = new JComboBox<>(model.getFunctions());
+        teamsBox = new JComboBox<>(model.getTeams());
     }
 
     private void build() {

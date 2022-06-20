@@ -22,8 +22,11 @@ public class EmployeeTab extends JPanel {
     private JButton delBtn;
     private JButton editBtn;
 
+    private Company model;
+
     public EmployeeTab(Company model) {
         super();
+        this.model = model;
         init();
         build();
     }
@@ -52,7 +55,7 @@ public class EmployeeTab extends JPanel {
         add(mainPanel, BorderLayout.CENTER);
     }
     private void init() {
-        employeeList = new JList<>(new String[]{"Person 1", "Person 2", "Person 3"});
+        employeeList = new JList<>(model.getEmployees());
         nameField = new JTextField();
         hrCheckBox = new JCheckBox();
         adminCheckBox = new JCheckBox();    
