@@ -13,7 +13,7 @@ public class LogBook {
     private BufferedWriter writer;
     private boolean fileWritingEnabled;
 
-    private LogBook() {}
+    public LogBook() {}
 
     public static LogBook getInstance() {
         if (instance == null) {

@@ -44,7 +44,7 @@ public class MainFrame extends JFrame {
             }
         }
         
-        pack();
+        //pack();
         setVisible(true);
     }
 

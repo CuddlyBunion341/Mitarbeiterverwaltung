@@ -7,6 +7,7 @@ public class UserAction {
     public static final int CHANGE_VALUE = 1;
     public static final int SET_ASSIGNMENT = 2;
     public static final int DELETE_PERSON = 3;
+    public static final int LOGIN_ATTEMPT = 4;
 
     private String[] actionDescription;
     private String entry;
