@@ -103,7 +103,7 @@ public class ViewController extends JFrame implements ActionListener {
                 Person person = company.getEmployees().get(frame.getOverviewTab().getEmployeeList().getSelectedIndex());
                 frame.getOverviewTab().getNameField().setText(person.getName());
                 //frame.getOverviewTab().getDepartmentField().setText(person.getDepartment);
-                frame.getOverviewTab().getFunctionList().setListData(person.getRoles());
+                frame.getOverviewTab().getFunctionList().setListData(person.getFunctions());
                 frame.getOverviewTab().getTeamList().setListData(person.getTeams());
             }
             catch (ArrayIndexOutOfBoundsException ignored){}

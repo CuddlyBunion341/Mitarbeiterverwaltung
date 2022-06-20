@@ -111,8 +111,8 @@ public class OverviewTab extends JPanel {
         // detail
         nameField = new JTextField();
         departmentField = new JTextField();
-        functionList = new JList<>(model.getFunctions());
-        teamList = new JList<>(model.getTeams());
+        functionList = new JList<>();
+        teamList = new JList<>();
         imageLabel = new JLabel();
     }
 

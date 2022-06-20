@@ -71,11 +71,11 @@ public class Person {
         this.teams = teams;
     }
 
-    public Vector<String> getRoles() {
+    public Vector<String> getFunctions() {
         return this.functions;
     }
 
-    public void setRoles(Vector<String> roles) {
+    public void setFunctions(Vector<String> roles) {
         this.functions = roles;
     }
 
