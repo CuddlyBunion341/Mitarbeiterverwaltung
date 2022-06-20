@@ -1,10 +1,17 @@
-package model.employees;
+package model.company;
+
+import java.util.Vector;
+
+import model.Team;
 
 public class Person {
     private String photoPath;
     private String firstName;
     private String lastName;
-    private Participation participation;
+    private boolean isAdmin;
+    private boolean isHr;
+    private Vector<Team> teams;
+    private Vector<String> roles;
 
     public Person(String fName, String lName, String photoPath) {
         this.firstName = fName;
@@ -36,11 +43,36 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public Participation getParticipation() {
-        return this.participation;
+    public boolean isAdmin() {
+        return this.isAdmin;
     }
 
-    public void setParticipation(Participation participation) {
-        this.participation = participation;
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
+
+    public boolean isHr() {
+        return this.isHr;
+    }
+
+    public void setHr(boolean isHr) {
+        this.isHr = isHr;
+    }
+
+    public Vector<Team> getTeams() {
+        return this.teams;
+    }
+
+    public void setTeams(Vector<Team> teams) {
+        this.teams = teams;
+    }
+
+    public Vector<String> getRoles() {
+        return this.roles;
+    }
+
+    public void setRoles(Vector<String> roles) {
+        this.roles = roles;
+    }
+
 }

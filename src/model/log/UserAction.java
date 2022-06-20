@@ -1,7 +1,6 @@
 package model.log;
 
-import model.employees.HR_Person;
-import model.employees.Person;
+import model.company.Person;
 
 public class UserAction {
     public static final int CREATE_PERSON = 0;
@@ -12,7 +11,7 @@ public class UserAction {
     private String[] actionDescription;
     private String entry;
 
-    public UserAction(HR_Person hrPerson, Person person, int action) {
+    public UserAction(Person person, int action) {
 
     }
 
