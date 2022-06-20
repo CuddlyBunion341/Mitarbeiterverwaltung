@@ -20,6 +20,8 @@ public class Company {
         hans.setPassword("123");
         hans.setAdmin(true);
         hans.setHr(true);
+
+        employees.add(hans);
     }
 
     public Vector<Person> getEmployees() {

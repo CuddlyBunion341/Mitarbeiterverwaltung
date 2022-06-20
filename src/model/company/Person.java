@@ -10,7 +10,7 @@ public class Person {
     private boolean isHr;
     private Vector<Team> teams;
     private Vector<String> roles;
-    private String password;
+    private int passwordHash;
 
     public Person(String fName, String lName, String photoPath) {
         this.firstName = fName;
@@ -79,11 +79,11 @@ public class Person {
     }
 
     public boolean authenticate(String password) {
-        return this.password.equals(password);
+        return this.passwordHash == password.hashCode();
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.passwordHash = password.hashCode();
     }
 
 }
