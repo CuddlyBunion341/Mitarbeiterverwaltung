@@ -21,14 +21,6 @@ public class Company {
         hans.setAdmin(true);
         hans.setHr(true);
 
-        Vector<String> departments = new Vector<>();
-        departments.add("Department1");
-        departments.add("Department2");
-        departments.add("Department3");
-        departments.add("Department4");
-        departments.add("Department5");
-        this.departments = departments;
-
         employees.add(hans);
     }
 
@@ -41,6 +33,12 @@ public class Company {
     }
 
     public Vector<String> getDepartments() {
+        Vector<String> departments = new Vector<>();
+        departments.add("Department1");
+        departments.add("Department2");
+        departments.add("Department3");
+        departments.add("Department4");
+        departments.add("Department5");
         return departments;
     }
 
