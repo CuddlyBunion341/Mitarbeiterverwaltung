@@ -17,11 +17,11 @@ public class MainFrame extends JFrame {
     private LogBuchPanel logBuchPanel;
 
     public MainFrame() {
-        setTitle("Hello World");
-        setSize(300, 200);
+        setTitle("Mitarbeiterverwaltung");
+        setSize(600, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         init();
-        pack();
+        //pack();
         setVisible(true);
     }
 
@@ -47,7 +47,7 @@ public class MainFrame extends JFrame {
             public void stateChanged(ChangeEvent arg0) {
                 Component mCompo=tabbedPane.getSelectedComponent();
                 tabbedPane.setPreferredSize(mCompo.getPreferredSize());
-                f.pack();
+                //f.pack();
             }   
         });
         add(tabbedPane);
