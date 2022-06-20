@@ -106,12 +106,8 @@ public class OverviewTab extends JPanel {
         functionFilter = new JComboBox<>(model.getFunctions());
         teamFilter = new JComboBox<>(model.getTeams());
         nameFilter = new JTextField("Name eingeben");
-        java.util.List<String> employees = new ArrayList<>();
-        for (int i = 0 ; i < 30; i++) {
-            employees.add("Person " + i);
-        }
 
-        employeeList = new JList<>(employees.toArray());
+        employeeList = new JList<>(model.getEmployees());
         // detail
         nameField = new JTextField();
         departmentField = new JTextField();
