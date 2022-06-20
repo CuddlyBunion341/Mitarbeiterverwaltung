@@ -67,8 +67,8 @@ public class ViewController extends JFrame implements ActionListener {
         @Override
         public void valueChanged(ListSelectionEvent e) {
             try{
-                String selectedPerson = frame.getOverviewTab().getEmployeeList().getValueAt(frame.getOverviewTab().getEmployeeList().getSelectedRow(), 0).toString();
-                frame.getOverviewTab().getEmployeeList().getSelectedValue();
+                Person person = (Person)(frame.getOverviewTab().getEmployeeList().getSelectedValue());
+
             }
             catch (ArrayIndexOutOfBoundsException ignored){}
         }
