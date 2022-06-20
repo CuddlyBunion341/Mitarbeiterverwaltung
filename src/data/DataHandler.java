@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
+import model.company.Department;
 import model.company.Person;
 import model.company.Team;
 
@@ -59,6 +60,11 @@ public class DataHandler {
     public static Vector<Team> getTeams() {
         Vector<Team> teams = new Vector<Team>();
         return teams;
+    }
+
+    public static Vector<Department> getDepartments() {
+        Vector<Department> departments = new Vector<Department>();
+        return departments;
     }
     
 }
