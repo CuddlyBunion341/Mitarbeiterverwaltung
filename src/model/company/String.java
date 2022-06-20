@@ -1,4 +1,4 @@
 package model.company;
 
-public class Department {
+public class String {
 }

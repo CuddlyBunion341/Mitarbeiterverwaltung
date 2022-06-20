@@ -8,7 +8,7 @@ public class Person {
     private String lastName;
     private boolean isAdmin;
     private boolean isHr;
-    private Vector<Team> teams;
+    private Vector<String> teams;
     private Vector<String> roles;
     private int passwordHash;
 
@@ -62,11 +62,11 @@ public class Person {
         this.isHr = isHr;
     }
 
-    public Vector<Team> getTeams() {
+    public Vector<String> getTeams() {
         return this.teams;
     }
 
-    public void setTeams(Vector<Team> teams) {
+    public void setTeams(Vector<String> teams) {
         this.teams = teams;
     }
 

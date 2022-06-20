@@ -9,21 +9,25 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
-import model.company.Department;
 import model.company.Person;
-import model.company.Team;
 
 public class DataHandler {
     private static final String personPath = "resource/csv/person.csv";
-    private static final String teamPath = "resource/csv/tean.csv";
+    private static final String teamPath = "resource/csv/team.csv";
 
     private static Vector<Person> employees;
-    private static Vector<Team> teams;
+    private static Vector<String> teams;
+    private static Vector<String> functions; // todo
 
     public static void main(String[] args) {
         Vector<Person> employees = DataHandler.getEmployees();
         for (Person p : employees) {
             System.out.println(p.getName());
+        }
+
+        Vector<String> teams = DataHandler.getTeams();
+        for (String t : teams) {
+            System.out.println(t);
         }
     }
 
@@ -39,11 +43,24 @@ public class DataHandler {
         }
     }
 
+    public static Vector<String> readTeams() {
+        teams = new Vector<>();
+        try {
+            Scanner scanner = new Scanner(new File(teamPath));
+            teams = new Vector<String>();
+            while (scanner.hasNextLine()) {
+                teams.add(scanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return teams;
+    }
+
     public static Vector<Person> readEmployees() {
         employees = new Vector<Person>();
-        Scanner scanner;
         try {
-            scanner = new Scanner(new File(personPath));
+            Scanner scanner = new Scanner(new File(personPath));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split(";");
@@ -70,26 +87,16 @@ public class DataHandler {
         return employees;
     }
 
-    public static void writeTeams(Vector<Team> teams) {
+    public static void writeTeams(Vector<String> teams) {
         try {
             FileWriter writer = new FileWriter(teamPath,true);
-            for (Team team : teams) {
-                // writer.write(team.getName() + ";" + team.getDescription() + "\n");
+            for (String team : teams) {
+                writer.write(team);
             }
             writer.close();
         } catch(IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static Vector<Team> readTeams() {
-        Vector<Team> teams = new Vector<Team>();
-        return teams;
-    }
-
-    public static Vector<Department> writeDepartments() {
-        Vector<Department> departments = new Vector<Department>();
-        return departments;
     }
 
     public static Vector<Person> getEmployees() {
@@ -99,7 +106,7 @@ public class DataHandler {
         return employees;
     }
 
-    public static Vector<Team> getTeams() {
+    public static Vector<String> getTeams() {
         if (teams == null) {
             readTeams();
         }

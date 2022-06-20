@@ -6,15 +6,15 @@ import data.DataHandler;
 
 public class Company {
     private Vector<Person> employees;
-    private Vector<Team> teams;
-    private Vector<Department> departments;
+    private Vector<String> teams;
+    private Vector<String> departments;
     private final String companyName;
 
     public Company(String name) {
         companyName = name;
         employees = DataHandler.readEmployees();
         teams = DataHandler.readTeams();
-        departments = DataHandler.writeDepartments();
+        // departments = DataHandler.readDepar();
 
         Person hans = new Person("Hans", "Jansen", "hans.png");
         hans.setPassword("123");
@@ -28,11 +28,11 @@ public class Company {
         return employees;
     }
 
-    public Vector<Team> getTeams() {
+    public Vector<String> getTeams() {
         return teams;
     }
 
-    public Vector<Department> getDepartments() {
+    public Vector<String> getDepartments() {
         return this.departments;
     }
 
