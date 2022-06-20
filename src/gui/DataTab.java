@@ -8,6 +8,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import model.company.Company;
+
 public class DataTab extends JPanel {
     private JTextField companyNameField;
     private JList departmentList;
@@ -18,7 +20,7 @@ public class DataTab extends JPanel {
     private ListEditPanel functionsPanel;
     private ListEditPanel teamsPanel;
 
-    public DataTab() {
+    public DataTab(Company model) {
         super();
         init();
         build();

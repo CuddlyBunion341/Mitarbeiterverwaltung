@@ -7,10 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import model.company.Company;
+
 public class LogBookTab extends JPanel {
     private JTextArea lookbookContents;
 
-    public LogBookTab() {
+    public LogBookTab(Company model) {
         super();
         setLayout(new BorderLayout());
         init();

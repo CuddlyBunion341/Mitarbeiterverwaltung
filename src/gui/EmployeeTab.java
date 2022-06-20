@@ -10,6 +10,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import model.company.Company;
+
 public class EmployeeTab extends JPanel {
     private JList employeeList;
     private JTextField nameField;
@@ -20,7 +22,7 @@ public class EmployeeTab extends JPanel {
     private JButton delBtn;
     private JButton editBtn;
 
-    public EmployeeTab() {
+    public EmployeeTab(Company model) {
         super();
         init();
         build();

@@ -9,13 +9,15 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import model.company.Company;
+
 public class AssigmentTab extends JPanel {
     private JList employeeList;
     private JTextField nameField;
     private JTextField departmentField;
     private JComboBox functionsBox;
     private JComboBox teamsBox;
-    public AssigmentTab() {
+    public AssigmentTab(Company model) {
         super();
         init();
         build();

@@ -14,6 +14,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import model.company.Company;
+
 public class OverviewTab extends JPanel {
     // personenliste
     private ButtonGroup sortGroup;
@@ -30,7 +32,7 @@ public class OverviewTab extends JPanel {
     private JList teamList;
     private JLabel imageLabel;
     
-    public OverviewTab() {
+    public OverviewTab(Company model) {
         super();
         init();
         setLayout(new BorderLayout());

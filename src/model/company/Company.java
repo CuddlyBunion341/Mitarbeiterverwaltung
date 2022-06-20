@@ -13,7 +13,24 @@ public class Company {
     public Company(String name) {
         companyName = name;
         employees = DataHandler.getEmployees();
-        teams = new Vector<Team>();
-        departments = new Vector<Department>();
+        teams = DataHandler.getTeams();
+        departments = DataHandler.getDepartments();
+    }
+
+    public Vector<Person> getEmployees() {
+        return employees;
+    }
+
+    public Vector<Team> getTeams() {
+        return teams;
+    }
+
+
+    public Vector<Department> getDepartments() {
+        return this.departments;
+    }
+
+    public String getCompanyName() {
+        return this.companyName;
     }
 }

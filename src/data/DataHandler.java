@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
-import model.Team;
 import model.company.Person;
+import model.company.Team;
 
 public class DataHandler {
     private static final String personPath = "src/data/files/person2.csv";
@@ -55,4 +55,10 @@ public class DataHandler {
             e.printStackTrace();
         }
     }
+
+    public static Vector<Team> getTeams() {
+        Vector<Team> teams = new Vector<Team>();
+        return teams;
+    }
+    
 }
