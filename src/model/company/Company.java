@@ -33,7 +33,13 @@ public class Company {
     }
 
     public Vector<String> getDepartments() {
-        return this.departments;
+        Vector<String> departments = new Vector<>();
+        departments.add("Department1");
+        departments.add("Department2");
+        departments.add("Department3");
+        departments.add("Department4");
+        departments.add("Department5");
+        return departments;
     }
 
     public String getCompanyName() {
