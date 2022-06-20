@@ -41,27 +41,7 @@ public class DataHandler {
 
     public static Vector<Person> getEmployees() {
         Vector<Person> people = new Vector<Person>();
-        Scanner sc = new Scanner(personPath);
-        sc.useDelimiter("\n");
-        while (sc.hasNext()) {
-            String line = sc.next();
-            String[] tokens = line.split(";");
-            String firstName = tokens[0];
-            String lastName = tokens[1];
-            String imagePath = tokens[2];
-
-            // // this is for later when we have images and designations
-            // boolean isAdmin = tokens[3].equals("true");
-            // boolean isHr = tokens[4].equals("true");
-
-            // String[] teams = tokens[5].split(",");
-            // String[] roles = tokens[6].split(",");
-
-            Person p = new Person(firstName, lastName, imagePath);
-            people.add(p);
-        }
-        sc.close();
-        return null;
+        return people;
     }
 
     public static void setTeams(Vector<Team> teams) {

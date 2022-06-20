@@ -1,29 +1,29 @@
 package controller;
 
+import gui.*;
+import model.company.Company;
 import view.Bridge;
 import view.LogIn;
 import view.LoggedIn;
 import view.LoggedOut;
 
+import javax.swing.*;
+
 public class ViewController {
     public void start(){
-        LoggedOut  loggedOut = new LoggedOut();
-        LogIn logIn = new LogIn();
-        logIn.setVisible(false);
-        Bridge transmition = new Bridge() {
-            @Override
-            public void loginPressed(int value) {
-                if (value == 0){
-                    logIn.setVisible(true);
-                }
-                else{
-                    LoggedIn loggedIn = new LoggedIn();
-                    loggedOut.dispose();
-                    logIn.dispose();
-                }
-            }
-        };
-        loggedOut.setBridge(transmition);
-        logIn.setBridge(transmition);
+        //ViewController controller = new ViewController();
+        //controller.start();
+
+        Company model = new Company("Mitarbeiterverwaltung v2.31");
+        MainFrame frame = new MainFrame();
+        frame.setVisible(true);
+
+        JTabbedPane tabs = frame.getTabbedPane();
+
+        tabs.addTab("Uebersicht", new OverviewTab());
+        tabs.addTab("Zuordnung", new AssigmentTab());
+        tabs.addTab("Personen", new EmployeeTab());
+        tabs.addTab("Stammdaten", new DataTab());
+        tabs.addTab("LogBuch", new LogBookTab());
     }
 }

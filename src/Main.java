@@ -1,4 +1,5 @@
 import javax.swing.JTabbedPane;
+import javax.swing.text.View;
 
 import controller.ViewController;
 import gui.AssigmentTab;
@@ -13,18 +14,5 @@ public class Main {
     public static void main(String[] args) {
         ViewController controller = new ViewController();
         controller.start();
-
-        Company model = new Company("Super duper Firma");
-        MainFrame frame = new MainFrame();
-        frame.setVisible(true);
-
-        JTabbedPane tabs = frame.getTabbedPane();
-
-        tabs.addTab("Uebersicht", new OverviewTab());
-        tabs.addTab("Zuordnung", new AssigmentTab());
-        tabs.addTab("Personen", new EmployeeTab());
-        tabs.addTab("Stammdaten", new DataTab());
-        tabs.addTab("LogBuch", new LogBookTab());
-
     }
 }
