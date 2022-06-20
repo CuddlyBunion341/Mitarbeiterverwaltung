@@ -1,6 +1,8 @@
 package data;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,27 +14,20 @@ import model.company.Person;
 import model.company.Team;
 
 public class DataHandler {
-    private static final String personPath = "src/data/files/person2.csv";
-    private static final String teamPath = "src/data/files/team2.csv";
-    private static final String departmentPath = "src/data/files/department2.csv";
-    private static final String userActionPath = "src/data/files/userAction2.csv";
+    private static final String personPath = "resource/csv/person.csv";
+    private static final String teamPath = "resource/csv/tean.csv";
 
     private static Vector<Person> employees;
     private static Vector<Team> teams;
-    private static Vector<Department> departments;
 
     public static void main(String[] args) {
-        Vector<Person> employees = new Vector<Person>();
-
-        for (int i = 0; i < 10; i++) {
-            Person person = new Person("firstName" + i, "lastName" + i, i + ".png");
-            employees.add(person);
+        Vector<Person> employees = DataHandler.getEmployees();
+        for (Person p : employees) {
+            System.out.println(p.getName());
         }
-
-        DataHandler.setEmployees(employees);
     }
 
-    public static void setEmployees(Vector<Person> people) {
+    public static void writeEmployees(Vector<Person> people) {
         try {
             FileWriter writer = new FileWriter(personPath,true);
             for (Person person : people) {
@@ -44,12 +39,38 @@ public class DataHandler {
         }
     }
 
-    public static Vector<Person> getEmployees() {
-        Vector<Person> people = new Vector<Person>();
-        return people;
+    public static Vector<Person> readEmployees() {
+        employees = new Vector<Person>();
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new File(personPath));
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split(";");
+                String firstName = parts[0];
+                String lastName = parts[1];
+                String photoPath = parts[2];
+                boolean isHR = parts[3].equals("true");
+                boolean isAdmin = parts[4].equals("true");
+                String teams = parts[5]; // todo
+                String functions = parts[6]; // todo
+                int passwordHash = Integer.parseInt(parts[7]);
+
+                Person person = new Person(firstName, lastName, photoPath);
+                person.setHr(isHR);
+                person.setAdmin(isAdmin);
+                person.setPasswordHash(passwordHash);
+
+                employees.add(person);
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return employees;
     }
 
-    public static void setTeams(Vector<Team> teams) {
+    public static void writeTeams(Vector<Team> teams) {
         try {
             FileWriter writer = new FileWriter(teamPath,true);
             for (Team team : teams) {
@@ -61,14 +82,28 @@ public class DataHandler {
         }
     }
 
-    public static Vector<Team> getTeams() {
+    public static Vector<Team> readTeams() {
         Vector<Team> teams = new Vector<Team>();
         return teams;
     }
 
-    public static Vector<Department> getDepartments() {
+    public static Vector<Department> writeDepartments() {
         Vector<Department> departments = new Vector<Department>();
         return departments;
+    }
+
+    public static Vector<Person> getEmployees() {
+        if (employees == null) {
+            readEmployees();
+        }
+        return employees;
+    }
+
+    public static Vector<Team> getTeams() {
+        if (teams == null) {
+            readTeams();
+        }
+        return teams;
     }
     
 }

@@ -12,9 +12,9 @@ public class Company {
 
     public Company(String name) {
         companyName = name;
-        employees = DataHandler.getEmployees();
-        teams = DataHandler.getTeams();
-        departments = DataHandler.getDepartments();
+        employees = DataHandler.readEmployees();
+        teams = DataHandler.readTeams();
+        departments = DataHandler.writeDepartments();
 
         Person hans = new Person("Hans", "Jansen", "hans.png");
         hans.setPassword("123");

@@ -86,4 +86,12 @@ public class Person {
         this.passwordHash = password.hashCode();
     }
 
+    public void setPasswordHash(int hash) {
+        this.passwordHash = hash;
+    }
+
+    public String toString() {
+        return this.firstName + " " + this.lastName;
+    }
+
 }
