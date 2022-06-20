@@ -13,6 +13,11 @@ public class MainFrame extends JFrame {
     private boolean hrMode;
     private boolean adminMode;
     private Company model;
+    private OverviewTab overviewTab;
+    private AssigmentTab assigmentTab;
+    private EmployeeTab employeeTab;
+    private DataTab dataTab;
+    private LogBookTab logBookTab;
 
     public MainFrame(Company model,boolean hrMode, boolean adminMode) {
         this.hrMode = hrMode;
@@ -24,13 +29,18 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         init();
 
-        tabbedPane.addTab("Uebersicht", new OverviewTab(model));
+        overviewTab = new OverviewTab(model);
+        tabbedPane.addTab("Uebersicht", overviewTab);
         if (hrMode || adminMode) {
-            tabbedPane.addTab("Zuordnung", new AssigmentTab(model));
-            tabbedPane.addTab("Personen", new EmployeeTab(model));
+            assigmentTab = new AssigmentTab(model);
+            tabbedPane.addTab("Zuordnung", assigmentTab);
+            employeeTab = new EmployeeTab(model);
+            tabbedPane.addTab("Personen", employeeTab);
             if (adminMode) {
-                tabbedPane.addTab("Stammdaten", new DataTab(model));
-                tabbedPane.addTab("LogBuch", new LogBookTab(model));
+                dataTab = new DataTab(model);
+                tabbedPane.addTab("Stammdaten", dataTab);
+                logBookTab = new LogBookTab(model);
+                tabbedPane.addTab("LogBuch", logBookTab);
             }
         }
         
@@ -59,4 +69,46 @@ public class MainFrame extends JFrame {
     public JTabbedPane getTabbedPane() {
         return tabbedPane;
     }
+
+
+    public boolean getHrMode() {
+        return this.hrMode;
+    }
+
+    public boolean isHrMode() {
+        return this.hrMode;
+    }
+
+    public boolean getAdminMode() {
+        return this.adminMode;
+    }
+
+    public boolean isAdminMode() {
+        return this.adminMode;
+    }
+
+    public Company getModel() {
+        return this.model;
+    }
+
+    public OverviewTab getOverviewTab() {
+        return this.overviewTab;
+    }
+
+    public AssigmentTab getAssigmentTab() {
+        return this.assigmentTab;
+    }
+
+    public EmployeeTab getEmployeeTab() {
+        return this.employeeTab;
+    }
+
+    public DataTab getDataTab() {
+        return this.dataTab;
+    }
+
+    public LogBookTab getLogBookTab() {
+        return this.logBookTab;
+    }
+
 }
