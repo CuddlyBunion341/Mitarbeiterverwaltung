@@ -17,6 +17,10 @@ public class DataHandler {
     private static final String departmentPath = "src/data/files/department2.csv";
     private static final String userActionPath = "src/data/files/userAction2.csv";
 
+    private static Vector<Person> employees;
+    private static Vector<Team> teams;
+    private static Vector<Department> departments;
+
     public static void main(String[] args) {
         Vector<Person> employees = new Vector<Person>();
 

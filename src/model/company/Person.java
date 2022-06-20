@@ -82,4 +82,8 @@ public class Person {
         return this.password.equals(password);
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }
