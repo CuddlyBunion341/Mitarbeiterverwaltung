@@ -15,15 +15,11 @@ public class ViewController {
         //controller.start();
 
         Company model = new Company("Mitarbeiterverwaltung v2.31");
-        MainFrame frame = new MainFrame();
+        MainFrame frame = new MainFrame(true,true);
         frame.setVisible(true);
 
         JTabbedPane tabs = frame.getTabbedPane();
 
-        tabs.addTab("Uebersicht", new OverviewTab());
-        tabs.addTab("Zuordnung", new AssigmentTab());
-        tabs.addTab("Personen", new EmployeeTab());
-        tabs.addTab("Stammdaten", new DataTab());
-        tabs.addTab("LogBuch", new LogBookTab());
+
     }
 }
