@@ -111,10 +111,12 @@ public class Person {
         String photoPath = parts[2];
         boolean isHR = parts[3].equals("true");
         boolean isAdmin = parts[4].equals("true");
-        String teams = parts[5];
-        String functions = parts[6];
-        int passwordHash = Integer.parseInt(parts[7]);
+        String department = parts[5];
+        String teams = parts[6];
+        String functions = parts[7];
+        int passwordHash = Integer.parseInt(parts[8]);
         Person person = new Person(firstName, lastName, photoPath);
+        person.setDepartment(department);
         person.setHr(isHR);
         person.setAdmin(isAdmin);
         person.setPasswordHash(passwordHash);
