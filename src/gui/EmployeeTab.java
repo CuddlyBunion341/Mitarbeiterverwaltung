@@ -12,6 +12,11 @@ import javax.swing.JTextField;
 
 import model.company.Company;
 
+/**
+ * AssignmentTab is a JPanel that contains all the components for the assignment tab.
+ * This tab is used to view employee data.
+ * @author Daniel Bengl
+ */
 public class EmployeeTab extends JPanel {
     private JList employeeList;
     private JTextField nameField;

@@ -4,6 +4,11 @@ import java.util.Vector;
 
 import data.DataHandler;
 
+/**
+ * Main model class for the company.
+ * Stores all the data of the company.
+ * @author Daniel Bengl
+ */
 public class Company {
     private Vector<Person> employees;
     private Vector<String> teams;

@@ -11,6 +11,11 @@ import javax.swing.JTextField;
 
 import model.company.Company;
 
+/**
+ * AssignmentTab is a JPanel that contains all the components for the assignment tab.
+ * This tab is used to create, change, and delete assignments.
+ * @author Daniel Bengl
+ */
 public class AssigmentTab extends JPanel {
     private JList employeeList;
     private JTextField nameField;

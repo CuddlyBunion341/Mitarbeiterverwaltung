@@ -8,6 +8,11 @@ import model.company.Company;
 
 import java.awt.*;
 
+/**
+ * MainFrame is the main frame of the application.
+ * It contains all the tabs.
+ * @author Daniel Bengl
+ */
 public class MainFrame extends JFrame {
     private JTabbedPane tabbedPane;
     private boolean hrMode;

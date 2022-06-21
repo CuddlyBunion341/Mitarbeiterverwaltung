@@ -9,6 +9,10 @@ import javax.swing.JTextArea;
 
 import model.company.Company;
 
+/**
+ * LogBookTab is a Tab used to view the logbook of a company.
+ * @author Daniel Bengl
+ */
 public class LogBookTab extends JPanel {
     private JTextArea lookbookContents;
 

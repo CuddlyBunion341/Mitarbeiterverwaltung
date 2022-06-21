@@ -15,6 +15,10 @@ import javax.swing.JTextField;
 
 import model.company.Company;
 
+/**
+ * OverviewTab is a Tab for viewing Employee data.
+ * @author Daniel Bengl
+ */
 public class OverviewTab extends JPanel {
     // personenliste
     private ButtonGroup sortGroup;

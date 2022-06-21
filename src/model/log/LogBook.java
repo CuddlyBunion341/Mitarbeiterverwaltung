@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
+/**
+ * Logbook
+ * @author Daniel Bengl
+ */
 public class LogBook {
     private static LogBook instance;
     private Vector<String> entries;

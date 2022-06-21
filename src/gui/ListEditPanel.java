@@ -8,6 +8,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+/**
+ * A simple button for viewing, updating and deleting elements from a JList.
+ * @author Daniel Bengl
+ */
 public class ListEditPanel extends JPanel {
     private JList list;
     private JButton addBtn;

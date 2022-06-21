@@ -9,6 +9,10 @@ import java.util.Vector;
 
 import model.company.Person;
 
+/**
+ * DataHandler is a class that handles all the data operations.
+ * @author Daniel Bengl
+ */
 public class DataHandler {
     private static final String personPath = "resource/csv/person.csv";
     private static final String teamPath = "resource/csv/team.csv";

@@ -3,6 +3,11 @@ package model.company;
 import java.util.Arrays;
 import java.util.Vector;
 
+/**
+ * Person model class.
+ * Stores all the data of a person.
+ * @author Daniel Bengl
+ */
 public class Person {
     private String photoPath;
     private String firstName;

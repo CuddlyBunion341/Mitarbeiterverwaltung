@@ -5,6 +5,11 @@ import java.time.format.DateTimeFormatter;
 
 import model.company.Person;
 
+/**
+ * UserAction model class.
+ * Stores all the data of a user action.
+ * @author Daniel Bengl
+ */
 public class UserAction {
     public static final int CREATE_PERSON = 0;
     public static final int CHANGE_VALUE = 1;

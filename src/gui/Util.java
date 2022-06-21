@@ -3,6 +3,10 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * A simple Utility class for creating various components.
+ * @author Daniel Bengl
+ */
 public class Util {
     public static JPanel fieldset(String title) {
         JPanel panel = new JPanel();
