@@ -50,13 +50,6 @@ public class DataHandler {
         for (String d : departments) {
             System.out.println(d);
         }
-
-
-        Vector<String> dummyData = new Vector<>();
-        for (int i = 0; i < 10; i++) {
-            dummyData.add("Dummy Data " + i);
-        }
-        writeTeams(dummyData);
     }
 
     public static Vector<String> readFunctions() {
