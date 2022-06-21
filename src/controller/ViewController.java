@@ -1,22 +1,15 @@
 package controller;
 
-import data.DataHandler;
 import gui.*;
 import model.company.Company;
 import model.company.Person;
 import model.log.LogBook;
 import model.log.UserAction;
-import view.Bridge;
-import view.LogIn;
-import view.LoggedIn;
-import view.LoggedOut;
 
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.xml.crypto.Data;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.RectangularShape;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Vector;
@@ -26,7 +19,7 @@ public class ViewController extends JFrame implements ActionListener {
     Company company = new Company("Mitarbeiterverwaltung v2.31");
     Company model;
     MainFrame frame;
-    LogBook logBook = new LogBook();
+    LogBook logBook = LogBook.getInstance();
 
     public void start(){
         login.getLoginButton().addActionListener(this);

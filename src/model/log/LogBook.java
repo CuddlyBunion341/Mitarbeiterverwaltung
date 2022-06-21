@@ -1,19 +1,30 @@
 package model.log;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 import java.util.Vector;
 
 public class LogBook {
-    private Vector<UserAction> entries;
     private static LogBook instance;
-    private File file;
-    private BufferedReader reader;
+    private Vector<String> entries;
+    private FileWriter file;
     private BufferedWriter writer;
-    private boolean fileWritingEnabled;
+    private static final String path = "resource/csv/log.csv";
 
-    public LogBook() {}
+    private LogBook() {
+        entries = new Vector<String>();
+        try {
+            file = new FileWriter(path);
+            writer = new BufferedWriter(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        readFile();
+    }
 
     public static LogBook getInstance() {
         if (instance == null) {
@@ -23,49 +34,42 @@ public class LogBook {
     }
 
     public void addEntry(UserAction entry) {
-        entries.add(entry);
-        if (fileWritingEnabled) {
-            writeFile();
-        }
-    }
-
-    public UserAction getEntry(int index) {
-        return entries.get(index);
-    }
-
-    public int getSize() {
-        return entries.size();
+        entries.add(entry.toString());
+        writeFile();
     }
 
     public void closeFile() {
         try {
             writer.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void printLog() {
-        entries.forEach(entry -> System.out.println(entry.getEntry()));
+        entries.forEach(entry -> System.out.println(entry));
     }
 
-    public void writeFile() {
+    public Vector<String> getEntries() {
+        return entries;
+    }
+
+    private void writeFile() {
         try {
-            writer.write(entries.get(entries.size() - 1).getEntry());
+            writer.write(entries.get(entries.size() - 1));
             writer.newLine();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void readFile() {
-        try {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // wtf should I do here?!
-                // entries.add(new UserAction(line));
+    private void readFile() {
+        try (Scanner sc = new Scanner(new FileReader(path))) {
+            while (sc.hasNextLine()) {
+                entries.add(sc.nextLine());
             }
-        } catch (Exception e) {
+            sc.close();
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }

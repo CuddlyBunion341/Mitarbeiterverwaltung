@@ -19,4 +19,8 @@ public class UserAction {
     public String getEntry() {
         return entry;
     }
+
+    public String toString() {
+        return entry;
+    }
 }
