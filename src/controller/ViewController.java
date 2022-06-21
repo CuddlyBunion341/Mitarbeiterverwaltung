@@ -23,6 +23,7 @@ import java.util.Vector;
 
 public class ViewController extends JFrame implements ActionListener {
     Login login = new Login();
+    Insert insert;
     Company company = new Company("Mitarbeiterverwaltung v2.31");
     Company model;
     MainFrame frame;
@@ -35,12 +36,22 @@ public class ViewController extends JFrame implements ActionListener {
     }
 
     public void updateTables(){
-        frame.getEmployeeTab().getEmployeeList().setListData(company.getEmployees());
-        frame.getAssigmentTab().getEmployeeList().setListData(company.getEmployees());
-        frame.getOverviewTab().getEmployeeList().setListData(company.getEmployees());
-        frame.getEmployeeTab().getEmployeeList().updateUI();
-        frame.getAssigmentTab().getEmployeeList().updateUI();
-        frame.getOverviewTab().getEmployeeList().updateUI();
+        if (frame.getEmployeeTab() != null){
+            frame.getEmployeeTab().getEmployeeList().setListData(company.getEmployees());
+            frame.getEmployeeTab().getEmployeeList().updateUI();
+        }
+        if (frame.getAssigmentTab() != null){
+            frame.getAssigmentTab().getEmployeeList().setListData(company.getEmployees());
+        }
+        if (frame.getOverviewTab() != null){
+            frame.getOverviewTab().getEmployeeList().setListData(company.getEmployees());
+            frame.getOverviewTab().getEmployeeList().updateUI();
+        }
+        if (frame.getDataTab() != null){
+            frame.getDataTab().getDepartmentList().setListData(company.getDepartments());
+            frame.getDataTab().getFunctionsList().setListData(company.getFunctions());
+            frame.getDataTab().getTeamsList().setListData(company.getTeams());
+        }
     }
 
     public void initializeMainFrame(Person person){
@@ -63,6 +74,15 @@ public class ViewController extends JFrame implements ActionListener {
         }
         if (frame.getDataTab() != null){
             frame.getDataTab().getDepartmentPanel().getAddBtn().addActionListener(this);
+            frame.getDataTab().getDepartmentPanel().getEditBtn().addActionListener(this);
+            frame.getDataTab().getDepartmentPanel().getRemBtn().addActionListener(this);
+            frame.getDataTab().getFunctionsPanel().getAddBtn().addActionListener(this);
+            frame.getDataTab().getFunctionsPanel().getEditBtn().addActionListener(this);
+            frame.getDataTab().getFunctionsPanel().getRemBtn().addActionListener(this);
+            frame.getDataTab().getTeamsPanel().getAddBtn().addActionListener(this);
+            frame.getDataTab().getTeamsPanel().getEditBtn().addActionListener(this);
+            frame.getDataTab().getTeamsPanel().getRemBtn().addActionListener(this);
+            insert.getSubmit().addActionListener(this);
         }
         if (frame.getOverviewTab() != null){
             frame.getOverviewTab().getEmployeeList().addListSelectionListener(new listSelection());
@@ -156,10 +176,11 @@ public class ViewController extends JFrame implements ActionListener {
 
         }
 
-        //Neuer Mitarbeiter
+
         if (frame.getEmployeeTab() != null){
+            //Neuer Mitarbeiter
             if (e.getSource() == frame.getEmployeeTab().getAddBtn()){
-                System.out.println("salatsose");
+                System.out.println("Test");
                 String[] splited = frame.getEmployeeTab().getNameField().getText().split(" ");
                 Person person = new Person(splited[0], splited[1], "");
                 if (frame.getEmployeeTab().getAdminCheckBox().isSelected()){
@@ -188,19 +209,23 @@ public class ViewController extends JFrame implements ActionListener {
                 }
             }
 
+            //Mitarbeiter bearbeiten
+
         }
         if (frame.getDataTab() != null){
-            //Mitarbeiter bearbeiten
-            if (e.getSource() == frame.getDataTab().getDepartmentPanel().getEditBtn()){
-                for (int i = 0; i < company.getEmployees().size(); i++){
-                    if (frame.getEmployeeTab().getNameField().equals(company.getEmployees().get(i).getName())){
-                        company.getEmployees().get(i).setHr(frame.getEmployeeTab().getHrCheckBox().isSelected());
-                        company.getEmployees().get(i).setAdmin(frame.getEmployeeTab().getAdminCheckBox().isSelected());
-                        updateTables();
-                        company.writeEmployees();
-                    }
+            //Add Department
+            if (e.getSource() == frame.getDataTab().getDepartmentPanel().getAddBtn()){
+                insert = new Insert("Department hinzufügen");
+            }
+            if (e.getSource() == insert.getSubmit()){
+                if (insert.getTitle().equals("Department hinzufügen")){
+                    company.getDepartments().add(insert.getInsertField().getText());
+                    updateTables();
+                    insert.dispose();
                 }
             }
+
+
         }
 
     }
