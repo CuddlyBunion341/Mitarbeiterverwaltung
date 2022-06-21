@@ -21,6 +21,7 @@ public class DataHandler {
     private static Vector<String> departments;
 
     public static void main(String[] args) {
+        System.out.println("123".hashCode());
         Vector<Person> employees = DataHandler.getEmployees();
         System.out.println("---- Employees ----------------------");
         for (Person p : employees) {
