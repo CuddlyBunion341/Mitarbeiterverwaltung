@@ -16,7 +16,7 @@ public class Company {
         employees = DataHandler.readEmployees();
         teams = DataHandler.readTeams();
         functions = DataHandler.readFunctions();
-        // departments = DataHandler.readDepar();
+        departments = DataHandler.readDepartments();
 
         Person hans = new Person("Hans", "Jansen", "hans.png");
         hans.setPassword("123");
@@ -44,5 +44,21 @@ public class Company {
 
     public Vector<String> getFunctions() {
         return functions;
+    }
+
+    public void writeEmployees() {
+        DataHandler.writeEmployees(employees);
+    }
+
+    public void writeTeams() {
+        DataHandler.writeTeams(teams);
+    }
+
+    public void writeFunctions() {
+        DataHandler.writeFunctions(functions);
+    }
+
+    public void writeDepartments() {
+        DataHandler.writeDepartments(departments);
     }
 }

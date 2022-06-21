@@ -1,9 +1,7 @@
 package data;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -70,6 +68,16 @@ public class DataHandler {
         Vector<Object> teams = readFile(teamPath, line -> line);
         return teams.stream().map(String::valueOf).collect(Vector::new, Vector::add, Vector::addAll);
     }
+
+    public static Vector<String> readDepartments() {
+        Vector<Object> departments = readFile(departmentPath, line -> line);
+        return departments.stream().map(String::valueOf).collect(Vector::new, Vector::add, Vector::addAll);
+    }
+
+    public static Vector<Person> readEmployees() {
+        Vector<Object> employees = readFile(personPath, line -> Person.fromCSV(line));
+        return employees.stream().map(Person.class::cast).collect(Vector::new, Vector::add, Vector::addAll);
+    }
     
     public static Vector<Object> readFile(String filePath, Parser parser) {
         Vector<Object> objects = new Vector<>();
@@ -84,43 +92,35 @@ public class DataHandler {
         return objects;
     }
 
-
-
-    public static Vector<String> readDepartments() {
-        Vector<String> departments = new Vector<>();
-        try {
-            Scanner scanner = new Scanner(new File(departmentPath));
-            departments = new Vector<String>();
-            while (scanner.hasNextLine()) {
-                departments.add(scanner.nextLine());
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return departments;
-    }
-
-    public static Vector<Person> readEmployees() {
-        Vector<Person> employees = new Vector<Person>();
-        try {
-            Scanner scanner = new Scanner(new File(personPath));
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                Person person = Person.fromCSV(line);
-                employees.add(person);
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return employees;
-    }
-
     public static void writeTeams(Vector<String> teams) {
         try {
             FileWriter writer = new FileWriter(teamPath,true);
             for (String team : teams) {
                 writer.write(team);
+            }
+            writer.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeFunctions(Vector<String> functions) {
+        try {
+            FileWriter writer = new FileWriter(functionPath,true);
+            for (String function : functions) {
+                writer.write(function);
+            }
+            writer.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeDepartments(Vector<String> departments) {
+        try {
+            FileWriter writer = new FileWriter(departmentPath,true);
+            for (String department : departments) {
+                writer.write(department);
             }
             writer.close();
         } catch(IOException e) {
