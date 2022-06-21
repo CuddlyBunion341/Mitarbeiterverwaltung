@@ -1,4 +1,4 @@
-package model.log;
+package main.java.model.log;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;

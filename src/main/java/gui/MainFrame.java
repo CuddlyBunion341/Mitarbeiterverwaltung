@@ -1,10 +1,10 @@
-package gui;
+package main.java.gui;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import model.company.Company;
+import main.java.model.company.Company;
 
 import java.awt.*;
 

@@ -1,4 +1,4 @@
-package gui;
+package main.java.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -10,7 +10,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.company.Company;
+import main.java.model.company.Company;
+import main.java.model.company.Person;
 
 /**
  * AssignmentTab is a JPanel that contains all the components for the assignment tab.
@@ -18,7 +19,7 @@ import model.company.Company;
  * @author Daniel Bengl
  */
 public class EmployeeTab extends JPanel {
-    private JList employeeList;
+    private JList<Person> employeeList;
     private JTextField nameField;
     private JCheckBox hrCheckBox;
     private JCheckBox adminCheckBox;
@@ -71,7 +72,7 @@ public class EmployeeTab extends JPanel {
     }
     // getters
 
-    public JList getEmployeeList() {
+    public JList<Person> getEmployeeList() {
         return this.employeeList;
     }
 

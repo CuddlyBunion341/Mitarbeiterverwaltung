@@ -1,9 +1,9 @@
-package model.log;
+package main.java.model.log;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import model.company.Person;
+import main.java.model.company.Person;
 
 /**
  * UserAction model class.

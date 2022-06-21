@@ -1,15 +1,17 @@
-package controller;
-
-import gui.*;
-import model.company.Company;
-import model.company.Person;
-import model.log.LogBook;
-import model.log.UserAction;
+package main.java.controller;
 
 import javax.swing.*;
 import javax.swing.event.*;
+
+import main.java.gui.*;
+import main.java.model.company.Company;
+import main.java.model.company.Person;
+import main.java.model.log.LogBook;
+import main.java.model.log.UserAction;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.channels.SeekableByteChannel;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Vector;
@@ -29,7 +31,7 @@ public class ViewController extends JFrame implements ActionListener {
         insert.setVisible(false);
     }
 
-    public void updateTables(){
+    public void updateLists(){
         if (frame.getEmployeeTab() != null){
             frame.getEmployeeTab().getEmployeeList().setListData(company.getEmployees());
             frame.getEmployeeTab().getEmployeeList().updateUI();
@@ -49,7 +51,7 @@ public class ViewController extends JFrame implements ActionListener {
     }
 
     public void updateDataGUI(){
-        updateTables();
+        updateLists();
         insert.setVisible(false);
         insert.getInsertField().setText("");
     }
@@ -61,8 +63,8 @@ public class ViewController extends JFrame implements ActionListener {
         frame.setVisible(true);
         JTabbedPane tabs = frame.getTabbedPane();
         frame.getOverviewTab().getEmployeeList().setListData(company.getEmployees());
-        frame.getOverviewTab().getFunctionList().setListData(new Vector());
-        frame.getOverviewTab().getTeamList().setListData(new Vector());
+        frame.getOverviewTab().getFunctionList().setListData(new Vector<String>());
+        frame.getOverviewTab().getTeamList().setListData(new Vector<String>());
 
 
         //addEventListeners
@@ -156,32 +158,55 @@ public class ViewController extends JFrame implements ActionListener {
 
         //Filter nach Department
         if (e.getSource() == frame.getOverviewTab().getDepartmentFilter()){
-            Vector<Person> result = new Vector<Person>((Collection<? extends Person>) frame.getEmployeeTab().getEmployeeList().getModel());
-            //geht???
-            for (int i = 0; i < result.size(); i++){
-                if (!result.get(i).getDepartment().equals(frame.getOverviewTab().getDepartmentFilter().getSelectedItem())){
-                    result.remove(i);
+            String selectedDepartment = frame.getOverviewTab().getDepartmentFilter().getSelectedItem().toString();
+            Vector<Person> allEmployees = new Vector<Person>((Collection<? extends Person>) frame.getOverviewTab().getEmployeeList().getModel());
+            Vector<Person> filtered = new Vector<Person>();
+
+            for (Person employee : allEmployees) {
+                if (employee.getDepartment().equals(selectedDepartment)) {
+                    filtered.add(employee);
                 }
             }
-            frame.getOverviewTab().getEmployeeList().setListData(result);
+            frame.getOverviewTab().getEmployeeList().setListData(filtered);
             frame.getOverviewTab().getEmployeeList().updateUI();
         }
 
         //Filet nach Funktion
         if (e.getSource() == frame.getOverviewTab().getFunctionFilter()){
+            String selectedFunction = frame.getOverviewTab().getFunctionFilter().getSelectedItem().toString();
+            Vector<Person> allEmployees = new Vector<Person>((Collection<? extends Person>) frame.getOverviewTab().getEmployeeList().getModel());
+            Vector<Person> filtered = new Vector<Person>();
 
+            for (Person employee : allEmployees) {
+                if (employee.getFunctions().contains(selectedFunction)) {
+                    filtered.add(employee);
+                }
+            }
+
+            frame.getOverviewTab().getEmployeeList().setListData(filtered);
+            frame.getOverviewTab().getEmployeeList().updateUI();
         }
 
         //Filter nach Team
         if (e.getSource() == frame.getOverviewTab().getTeamFilter()){
+            String selectedTeam = frame.getOverviewTab().getTeamFilter().getSelectedItem().toString();
+            Vector<Person> allEmployees = new Vector<Person>((Collection<? extends Person>) frame.getOverviewTab().getEmployeeList().getModel());
+            Vector<Person> filtered = new Vector<Person>();
 
+            for (Person employee : allEmployees) {
+                if (employee.getTeams().contains(selectedTeam)) {
+                    filtered.add(employee);
+                }
+            }
+
+            frame.getOverviewTab().getEmployeeList().setListData(filtered);
+            frame.getOverviewTab().getEmployeeList().updateUI();
         }
 
 
         if (frame.getEmployeeTab() != null){
             //Neuer Mitarbeiter
             if (e.getSource() == frame.getEmployeeTab().getAddBtn()){
-                System.out.println("Test");
                 String[] splited = frame.getEmployeeTab().getNameField().getText().split(" ");
                 Person person = new Person(splited[0], splited[1], "");
                 if (frame.getEmployeeTab().getAdminCheckBox().isSelected()){
@@ -192,7 +217,7 @@ public class ViewController extends JFrame implements ActionListener {
                 }
                 company.getEmployees().add(person);
                 company.writeEmployees();
-                updateTables();
+                updateLists();
             }
 
             //Mitarbeiter entfernen
@@ -200,7 +225,7 @@ public class ViewController extends JFrame implements ActionListener {
                 for (int i = 0; i < company.getEmployees().size(); i++){
                     if (company.getEmployees().get(i).getName().equals(frame.getEmployeeTab().getNameField().getText())){
                         company.getEmployees().remove(i);
-                        updateTables();
+                        updateLists();
                         frame.getEmployeeTab().getNameField().setText("");
                         frame.getEmployeeTab().getHrCheckBox().setSelected(false);
                         frame.getEmployeeTab().getAdminCheckBox().setSelected(false);

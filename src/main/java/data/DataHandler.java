@@ -1,4 +1,4 @@
-package data;
+package main.java.data;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
-import model.company.Person;
+import main.java.model.company.Person;
 
 /**
  * DataHandler is a class that handles all the data operations.
@@ -25,7 +25,6 @@ public class DataHandler {
     private static Vector<String> departments;
 
     public static void main(String[] args) {
-        System.out.println("123".hashCode());
         Vector<Person> employees = DataHandler.getEmployees();
         System.out.println("---- Employees ----------------------");
         for (Person p : employees) {
@@ -52,22 +51,22 @@ public class DataHandler {
         }
     }
 
-    public static Vector<String> readFunctions() {
+    private static Vector<String> readFunctions() {
         Vector<Object> functions = readFile(functionPath, line -> line);
         return functions.stream().map(String::valueOf).collect(Vector::new, Vector::add, Vector::addAll);
     }
 
-    public static Vector<String> readTeams() {
+    private static Vector<String> readTeams() {
         Vector<Object> teams = readFile(teamPath, line -> line);
         return teams.stream().map(String::valueOf).collect(Vector::new, Vector::add, Vector::addAll);
     }
 
-    public static Vector<String> readDepartments() {
+    private static Vector<String> readDepartments() {
         Vector<Object> departments = readFile(departmentPath, line -> line);
         return departments.stream().map(String::valueOf).collect(Vector::new, Vector::add, Vector::addAll);
     }
 
-    public static Vector<Person> readEmployees() {
+    private static Vector<Person> readEmployees() {
         Vector<Object> employees = readFile(personPath, line -> Person.fromCSV(line));
         return employees.stream().map(Person.class::cast).collect(Vector::new, Vector::add, Vector::addAll);
     }

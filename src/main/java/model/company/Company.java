@@ -1,8 +1,8 @@
-package model.company;
+package main.java.model.company;
 
 import java.util.Vector;
 
-import data.DataHandler;
+import main.java.data.DataHandler;
 
 /**
  * Main model class for the company.
@@ -18,30 +18,38 @@ public class Company {
 
     public Company(String name) {
         companyName = name;
-        employees = DataHandler.readEmployees();
-        teams = DataHandler.readTeams();
-        functions = DataHandler.readFunctions();
-        departments = DataHandler.readDepartments();
     }
 
     public Vector<Person> getEmployees() {
+        if (employees == null) {
+            employees = DataHandler.getEmployees();
+        }
         return employees;
     }
 
     public Vector<String> getTeams() {
+        if (teams == null) {
+            teams = DataHandler.getTeams();
+        }
         return teams;
     }
 
     public Vector<String> getDepartments() {
+        if (departments == null) {
+            departments = DataHandler.getDepartments();
+        }
         return departments;
+    }
+
+    public Vector<String> getFunctions() {
+        if (functions == null) {
+            functions = DataHandler.getFunctions();
+        }
+        return functions;
     }
 
     public String getCompanyName() {
         return companyName;
-    }
-
-    public Vector<String> getFunctions() {
-        return functions;
     }
 
     public void writeEmployees() {

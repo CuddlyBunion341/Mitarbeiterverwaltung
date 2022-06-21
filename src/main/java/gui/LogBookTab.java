@@ -1,4 +1,4 @@
-package gui;
+package main.java.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import model.company.Company;
+import main.java.model.company.Company;
 
 /**
  * LogBookTab is a Tab used to view the logbook of a company.

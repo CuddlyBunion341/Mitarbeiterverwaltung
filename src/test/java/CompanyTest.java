@@ -1,10 +1,15 @@
-package test;
+package test.java;
 import org.junit.Before;
 import org.junit.Test;
+
+import main.java.data.DataHandler;
+import main.java.model.company.Company;
+import main.java.model.company.Person;
 
 import java.util.Vector;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class CompanyTest {
 
@@ -12,13 +17,21 @@ public class CompanyTest {
 
     @Before
     public void setUp(){
-        company = new Company();
+        company = new Company("Test name");
+    }
+
+    @Test
+    public void dataHandlerTest() {
+        assertTrue(DataHandler.getDepartments().size() > 0);
+        assertTrue(DataHandler.getEmployees().size() > 0);
+        assertTrue(DataHandler.getFunctions().size() > 0);
+        assertTrue(DataHandler.getTeams().size() > 0);
     }
 
     @Test
     public void employeesNotEmpty() {
         Vector<Person> employees = company.getEmployees();
-        assertEquals(employees.size() > 0);
+        assertTrue(employees.size() > 0);
     }
 
     @Test
@@ -30,12 +43,12 @@ public class CompanyTest {
     @Test
     public void teamsTestNotEmpty() throws NullPointerException {
         Vector<String> teams = DataHandler.getTeams();
-        assertEquals(teams.size() > 0);
+        assertTrue(teams.size() > 0);
     }
     @Test
     public void departmentsNotEmpty() throws NullPointerException {
         Vector<String> departements = DataHandler.getDepartments();
-        assert(departements.size() > 0);
+        assertTrue(departements.size() > 0);
     }
 
 }

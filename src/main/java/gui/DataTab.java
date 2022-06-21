@@ -1,4 +1,4 @@
-package gui;
+package main.java.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -8,7 +8,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.company.Company;
+import main.java.model.company.Company;
 
 /**
  * AssignmentTab is a JPanel that contains all the components for the assignment tab.
@@ -17,9 +17,9 @@ import model.company.Company;
  */
 public class DataTab extends JPanel {
     private JTextField companyNameField;
-    private JList departmentList;
-    private JList functionsList;
-    private JList teamsList;
+    private JList<String> departmentList;
+    private JList<String> functionsList;
+    private JList<String> teamsList;
     
     private ListEditPanel departmentPanel;
     private ListEditPanel functionsPanel;
@@ -67,15 +67,15 @@ public class DataTab extends JPanel {
         return this.companyNameField;
     }
 
-    public JList getDepartmentList() {
+    public JList<String> getDepartmentList() {
         return this.departmentList;
     }
 
-    public JList getFunctionsList() {
+    public JList<String> getFunctionsList() {
         return this.functionsList;
     }
 
-    public JList getTeamsList() {
+    public JList<String> getTeamsList() {
         return this.teamsList;
     }
 

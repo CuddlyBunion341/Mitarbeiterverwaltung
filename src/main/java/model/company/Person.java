@@ -1,4 +1,4 @@
-package model.company;
+package main.java.model.company;
 
 import java.util.Arrays;
 import java.util.Vector;

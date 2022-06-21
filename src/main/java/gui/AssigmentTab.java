@@ -1,4 +1,4 @@
-package gui;
+package main.java.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -9,7 +9,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.company.Company;
+import main.java.model.company.Company;
+import main.java.model.company.Person;
 
 /**
  * AssignmentTab is a JPanel that contains all the components for the assignment tab.
@@ -17,11 +18,11 @@ import model.company.Company;
  * @author Daniel Bengl
  */
 public class AssigmentTab extends JPanel {
-    private JList employeeList;
+    private JList<Person> employeeList;
     private JTextField nameField;
     private JTextField departmentField;
-    private JComboBox functionsBox;
-    private JComboBox teamsBox;
+    private JComboBox<String> functionsBox;
+    private JComboBox<String> teamsBox;
     private Company model;
 
     public AssigmentTab(Company model) {
@@ -65,7 +66,7 @@ public class AssigmentTab extends JPanel {
 
     // getters
 
-    public JList getEmployeeList() {
+    public JList<Person> getEmployeeList() {
         return this.employeeList;
     }
 
@@ -77,11 +78,11 @@ public class AssigmentTab extends JPanel {
         return this.departmentField;
     }
 
-    public JComboBox getFunctionsBox() {
+    public JComboBox<String> getFunctionsBox() {
         return this.functionsBox;
     }
 
-    public JComboBox getTeamsBox() {
+    public JComboBox<String> getTeamsBox() {
         return this.teamsBox;
     }
 

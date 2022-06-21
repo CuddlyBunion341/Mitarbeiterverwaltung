@@ -1,4 +1,4 @@
-package gui;
+package main.java.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -13,7 +13,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import model.company.Company;
+import main.java.model.company.Company;
+import main.java.model.company.Person;
 
 /**
  * OverviewTab is a Tab for viewing Employee data.
@@ -22,17 +23,17 @@ import model.company.Company;
 public class OverviewTab extends JPanel {
     // personenliste
     private ButtonGroup sortGroup;
-    private JComboBox departmentFilter;
-    private JComboBox functionFilter;
-    private JComboBox teamFilter;
+    private JComboBox<String> departmentFilter;
+    private JComboBox<String> functionFilter;
+    private JComboBox<String> teamFilter;
     private JTextField nameFilter;
-    private JList employeeList;
+    private JList<Person> employeeList;
 
     // detail
     private JTextField nameField;
     private JTextField departmentField;
-    private JList functionList;
-    private JList teamList;
+    private JList<String> functionList;
+    private JList<String> teamList;
     private JLabel imageLabel;
 
     private Company model;
@@ -125,15 +126,15 @@ public class OverviewTab extends JPanel {
         return this.sortGroup;
     }
 
-    public JComboBox getDepartmentFilter() {
+    public JComboBox<String> getDepartmentFilter() {
         return this.departmentFilter;
     }
 
-    public JComboBox getFunctionFilter() {
+    public JComboBox<String> getFunctionFilter() {
         return this.functionFilter;
     }
 
-    public JComboBox getTeamFilter() {
+    public JComboBox<String> getTeamFilter() {
         return this.teamFilter;
     }
 
@@ -141,7 +142,7 @@ public class OverviewTab extends JPanel {
         return this.nameFilter;
     }
 
-    public JList getEmployeeList() {
+    public JList<Person> getEmployeeList() {
         return this.employeeList;
     }
 
@@ -153,11 +154,11 @@ public class OverviewTab extends JPanel {
         return this.departmentField;
     }
 
-    public JList getFunctionList() {
+    public JList<String> getFunctionList() {
         return this.functionList;
     }
 
-    public JList getTeamList() {
+    public JList<String> getTeamList() {
         return this.teamList;
     }
 
