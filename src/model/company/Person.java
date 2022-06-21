@@ -1,5 +1,6 @@
 package model.company;
 
+import java.util.Arrays;
 import java.util.Vector;
 
 public class Person {
@@ -110,13 +111,15 @@ public class Person {
         String photoPath = parts[2];
         boolean isHR = parts[3].equals("true");
         boolean isAdmin = parts[4].equals("true");
-        String teams = parts[5]; // todo
-        String functions = parts[6]; // todo
+        String teams = parts[5];
+        String functions = parts[6];
         int passwordHash = Integer.parseInt(parts[7]);
         Person person = new Person(firstName, lastName, photoPath);
         person.setHr(isHR);
         person.setAdmin(isAdmin);
         person.setPasswordHash(passwordHash);
+        person.setTeams(new Vector<String>(Arrays.asList(teams.split(","))));
+        person.setFunctions(new Vector<String>(Arrays.asList(functions.split(","))));
         return person;
     }
 
