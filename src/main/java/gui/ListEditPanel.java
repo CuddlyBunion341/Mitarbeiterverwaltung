@@ -62,6 +62,10 @@ public class ListEditPanel extends JPanel {
         return list.getSelectedValue();
     }
 
+    public JList getList() {
+        return list;
+    }
+
     public JButton getAddBtn() {
         return addBtn;
     }
