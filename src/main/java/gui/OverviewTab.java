@@ -23,6 +23,9 @@ import main.java.model.company.Person;
 public class OverviewTab extends JPanel {
     // personenliste
     private ButtonGroup sortGroup;
+    private JRadioButton sortNoneRadio;
+    private JRadioButton sortAscRadio;
+    private JRadioButton sortDescRadio;
     private JComboBox<String> departmentFilter;
     private JComboBox<String> functionFilter;
     private JComboBox<String> teamFilter;
@@ -84,9 +87,10 @@ public class OverviewTab extends JPanel {
         // Sortier Panel
         JPanel sortPanel = Util.fieldset("Sortierung");
         sortGroup = new ButtonGroup();
-        sortGroup.add((AbstractButton) sortPanel.add(new JRadioButton("keine")));
-        sortGroup.add((AbstractButton) sortPanel.add(new JRadioButton("A-Z")));
-        sortGroup.add((AbstractButton) sortPanel.add(new JRadioButton("Z-A")));
+    
+        sortGroup.add((AbstractButton) sortPanel.add(sortNoneRadio));
+        sortGroup.add((AbstractButton) sortPanel.add(sortAscRadio));
+        sortGroup.add((AbstractButton) sortPanel.add(sortDescRadio));
         optionsPanel.add(sortPanel);
 
         // Filter Panel
@@ -118,6 +122,10 @@ public class OverviewTab extends JPanel {
         functionList = new JList<>();
         teamList = new JList<>();
         imageLabel = new JLabel();
+        // radio
+        sortNoneRadio = new JRadioButton("keine");
+        sortAscRadio = new JRadioButton("A-Z");
+        sortDescRadio = new JRadioButton("Z-A");
     }
 
     // getters
@@ -164,6 +172,18 @@ public class OverviewTab extends JPanel {
 
     public JLabel getImageLabel() {
         return this.imageLabel;
+    }
+
+    public JRadioButton getSortNoneRadio() {
+        return sortNoneRadio;
+    }
+
+    public JRadioButton getSortAscRadio() {
+        return sortAscRadio;
+    }
+
+    public JRadioButton getSortDescRadio() {
+        return sortDescRadio;
     }
 
 }

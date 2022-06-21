@@ -1,4 +1,4 @@
-//package test.java;
+package test.java;
 //import org.junit.Before;
 //import org.junit.Test;
 //

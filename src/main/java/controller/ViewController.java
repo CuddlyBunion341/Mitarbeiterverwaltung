@@ -17,6 +17,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Vector;
 
@@ -114,6 +115,7 @@ public class ViewController extends JFrame implements ActionListener {
         // disable components
         frame.getOverviewTab().getNameField().setEditable(false);
         frame.getOverviewTab().getDepartmentField().setEditable(false);
+        frame.getOverviewTab().getSortNoneRadio().setSelected(true);
 
         // addEventListeners
         if (frame.getEmployeeTab() != null) {
@@ -139,6 +141,9 @@ public class ViewController extends JFrame implements ActionListener {
             frame.getOverviewTab().getDepartmentFilter().addActionListener(this);
             frame.getOverviewTab().getTeamFilter().addActionListener(this);
             frame.getOverviewTab().getFunctionFilter().addActionListener(this);
+            frame.getOverviewTab().getSortNoneRadio().addActionListener(this);
+            frame.getOverviewTab().getSortAscRadio().addActionListener(this);
+            frame.getOverviewTab().getSortDescRadio().addActionListener(this);
         }
 
         if (frame.getAssigmentTab() != null) {
@@ -241,11 +246,10 @@ public class ViewController extends JFrame implements ActionListener {
             return;
         }
 
-        // Filter nach Department
         OverviewTab overviewTab = frame.getOverviewTab();
         System.out.println(source);
         if (source == overviewTab.getDepartmentFilter() || source == overviewTab.getFunctionFilter()
-                || source == overviewTab.getTeamFilter()) {
+                || source == overviewTab.getTeamFilter() || source == overviewTab.getSortNoneRadio() || source == overviewTab.getSortAscRadio() || source == overviewTab.getSortDescRadio()) {
             Vector<Person> filtered = new Vector<>(company.getEmployees());
             // Filter nach Department
             if (source == overviewTab.getDepartmentFilter()) {
@@ -273,6 +277,17 @@ public class ViewController extends JFrame implements ActionListener {
                     filtered.removeIf(employee -> !employee.getTeams().contains(selectedTeam));
                 }
             }
+
+            // sort ascending
+            if (source == overviewTab.getSortAscRadio()) {
+                Collections.sort(filtered);
+            }
+            
+            if (source == overviewTab.getSortDescRadio()) {
+                Collections.sort(filtered);
+                Collections.reverse(filtered);
+            }
+
             overviewTab.getEmployeeList().setListData(filtered);
             overviewTab.getEmployeeList().updateUI();
             return;

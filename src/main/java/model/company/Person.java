@@ -8,7 +8,7 @@ import java.util.Vector;
  * Stores all the data of a person.
  * @author Daniel Bengl
  */
-public class Person {
+public class Person implements Comparable {
     private String photoPath;
     private String firstName;
     private String lastName;
@@ -134,6 +134,10 @@ public class Person {
         String csv = firstName + ";" + lastName + ";" + photoPath + ";" + isHr + ";" + isAdmin
                 + ";" + teams + ";" + functions + ";" + passwordHash;
         return csv;
-    };
+    }
 
+    @Override
+    public int compareTo(Object o) {
+        return getName().compareTo(o.toString());
+    };
 }
