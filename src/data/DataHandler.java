@@ -50,6 +50,13 @@ public class DataHandler {
         for (String d : departments) {
             System.out.println(d);
         }
+
+
+        Vector<String> dummyData = new Vector<>();
+        for (int i = 0; i < 10; i++) {
+            dummyData.add("Dummy Data " + i);
+        }
+        writeTeams(dummyData);
     }
 
     public static Vector<String> readFunctions() {
@@ -72,12 +79,12 @@ public class DataHandler {
         return employees.stream().map(Person.class::cast).collect(Vector::new, Vector::add, Vector::addAll);
     }
     
-    public static Vector<Object> readFile(String filePath, Parser parser) {
+    private static Vector<Object> readFile(String filePath, LineAction parser) {
         Vector<Object> objects = new Vector<>();
         try {
             Scanner scanner = new Scanner(new File(filePath));
             while (scanner.hasNextLine()) {
-                objects.add(parser.parse(scanner.nextLine()));
+                objects.add(parser.action(scanner.nextLine()));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -87,9 +94,10 @@ public class DataHandler {
 
     public static void writeTeams(Vector<String> teams) {
         try {
-            FileWriter writer = new FileWriter(teamPath,true);
+            FileWriter writer = new FileWriter(teamPath);
             for (String team : teams) {
                 writer.write(team);
+                writer.write("\n");
             }
             writer.close();
         } catch(IOException e) {
@@ -99,9 +107,10 @@ public class DataHandler {
 
     public static void writeFunctions(Vector<String> functions) {
         try {
-            FileWriter writer = new FileWriter(functionPath,true);
+            FileWriter writer = new FileWriter(functionPath);
             for (String function : functions) {
                 writer.write(function);
+                writer.write("\n");
             }
             writer.close();
         } catch(IOException e) {
@@ -111,9 +120,10 @@ public class DataHandler {
 
     public static void writeDepartments(Vector<String> departments) {
         try {
-            FileWriter writer = new FileWriter(departmentPath,true);
+            FileWriter writer = new FileWriter(departmentPath);
             for (String department : departments) {
                 writer.write(department);
+                writer.write("\n");
             }
             writer.close();
         } catch(IOException e) {
@@ -123,9 +133,9 @@ public class DataHandler {
 
     public static void writeEmployees(Vector<Person> people) {
         try {
-            FileWriter writer = new FileWriter(personPath,true);
+            FileWriter writer = new FileWriter(personPath);
             for (Person person : people) {
-                writer.write(person.getFirstName() + ";" + person.getLastName() + ";" + person.getPhotoPath() + "\n");
+                writer.write(person.toCSV());
             }
             writer.close();
         } catch(IOException e) {
@@ -163,18 +173,6 @@ public class DataHandler {
     
 }
 
-
-interface DataHandlerInterface {
-    public Vector<Person> getEmployees();
-    public Vector<String> getTeams();
-    public Vector<String> getFunctions();
-    public Vector<String> getDepartments();
-    public void writeEmployees(Vector<Person> employees);
-    public void writeTeams();
-    public void writeFunctions();
-    public void writeDepartments();
-}
-
-interface Parser {
-    public Object parse(String line);
+interface LineAction {
+    public Object action(String line);
 }
