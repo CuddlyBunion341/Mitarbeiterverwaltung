@@ -32,6 +32,7 @@ public class ViewController extends JFrame implements ActionListener {
     }
 
     public void initializeMainFrame(Person person){
+        //prepare mainFrame
         model = new Company("Eingeloggt als " + person.getName());
         frame = new MainFrame(company,person.isHr(),person.isAdmin());
         frame.setVisible(true);
@@ -39,6 +40,8 @@ public class ViewController extends JFrame implements ActionListener {
         frame.getOverviewTab().getEmployeeList().setListData(company.getEmployees());
         frame.getOverviewTab().getFunctionList().setListData(new Vector());
         frame.getOverviewTab().getTeamList().setListData(new Vector());
+
+        //addEventListeners
         frame.getEmployeeTab().getDelBtn().addActionListener(this);
         frame.getDataTab().getDepartmentPanel().getAddBtn().addActionListener(this);
         frame.getOverviewTab().getEmployeeList().addListSelectionListener(new listSelection());
@@ -60,6 +63,7 @@ public class ViewController extends JFrame implements ActionListener {
             public void update(DocumentEvent e){
                 if (frame.getOverviewTab().getNameFilter().getText().equals("")){
                     frame.getOverviewTab().getEmployeeList().setListData(company.getEmployees());
+                    frame.getOverviewTab().getEmployeeList().updateUI();
                 }
                 else{
                     Vector<Person> result = new Vector<Person>();
@@ -69,6 +73,7 @@ public class ViewController extends JFrame implements ActionListener {
                         }
                     }
                     frame.getOverviewTab().getEmployeeList().setListData(result);
+                    frame.getOverviewTab().getEmployeeList().updateUI();
                 }
             }
         });
@@ -76,8 +81,10 @@ public class ViewController extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //result of depFilter
         Vector<Person> result = company.getEmployees();
-        Vector<Person> result2;
+
+        //login
         if (e.getSource() == login.getLoginButton()) {
             for (int i = 0; i < company.getEmployees().size(); i++){
                 if (login.getUserField().getText().equals(company.getEmployees().get(i).getName())){
@@ -117,18 +124,23 @@ public class ViewController extends JFrame implements ActionListener {
                 }
             }
             frame.getOverviewTab().getEmployeeList().setListData(result);
+            frame.getOverviewTab().getEmployeeList().updateUI();
         }
 
         //Filter nach Team
         if (e.getSource() == frame.getOverviewTab().getTeamFilter()){
-            result2 = new Vector<Person>();
+           Vector<Person> result2 = new Vector<Person>();
             if (frame.getOverviewTab().getTeamFilter().getSelectedItem().toString().equals("Alle")){
                 result2 = result;
             }
             else{
                 for (int i = 0; i < result.size(); i++){
-                    //if (result.get(i).get)
+                    if (result.get(i).getTeams().contains(frame.getOverviewTab().getTeamFilter().getSelectedItem().toString())){
+                        result2.add(result.get(i));
+                    }
                 }
+                frame.getOverviewTab().getTeamList().setListData(result2);
+                frame.getOverviewTab().getTeamList().updateUI();
             }
         }
 
@@ -171,17 +183,14 @@ public class ViewController extends JFrame implements ActionListener {
             try{
                 Person person = company.getEmployees().get(frame.getOverviewTab().getEmployeeList().getSelectedIndex());
                 frame.getOverviewTab().getNameField().setText(person.getName());
-                frame.getOverviewTab().getNameField().updateUI();
-
-               /*
                 frame.getOverviewTab().getDepartmentField().setText(person.getDepartment());
-                frame.getOverviewTab().getDepartmentField().updateUI();
                 frame.getOverviewTab().getFunctionList().setListData(person.getFunctions());
-                frame.getOverviewTab().getFunctionList().updateUI();
                 frame.getOverviewTab().getTeamList().setListData(person.getTeams());
-                frame.getOverviewTab().getTeamList().updateUI();
-                 */
 
+                frame.getOverviewTab().getNameField().updateUI();
+                frame.getOverviewTab().getDepartmentField().updateUI();
+                frame.getOverviewTab().getFunctionList().updateUI();
+                frame.getOverviewTab().getTeamList().updateUI();
             }
             catch (ArrayIndexOutOfBoundsException ignored){}
         }
