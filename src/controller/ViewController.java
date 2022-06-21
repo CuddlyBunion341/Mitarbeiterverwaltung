@@ -48,6 +48,12 @@ public class ViewController extends JFrame implements ActionListener {
         }
     }
 
+    public void updateDataGUI(){
+        updateTables();
+        insert.setVisible(false);
+        insert.getInsertField().setText("");
+    }
+
     public void initializeMainFrame(Person person){
         //prepare mainFrame
         model = new Company("Eingeloggt als " + person.getName());
@@ -224,34 +230,74 @@ public class ViewController extends JFrame implements ActionListener {
                 insert.setVisible(true);
             }
 
-            //Add Department, Team or Function
+            //____________
+
+            //Edit Department
+            if (e.getSource() == frame.getDataTab().getDepartmentPanel().getEditBtn()){
+                insert.setTitle("Department bearbeiten");
+                insert.setVisible(true);
+            }
+            //Edit Function
+            if (e.getSource() == frame.getDataTab().getFunctionsPanel().getEditBtn()){
+                insert.setTitle("Funktion bearbeiten");
+                insert.setVisible(true);
+            }
+            //Edit Team
+            if (e.getSource() == frame.getDataTab().getTeamsPanel().getEditBtn()){
+                insert.setTitle("Team bearbeiten");
+                insert.setVisible(true);
+            }
+
+            //Department, Team or Function
             if (e.getSource() == insert.getSubmit()){
                 if (insert.getTitle().equals("Department hinzufügen")){
                     company.getDepartments().add(insert.getInsertField().getText());
                     company.writeDepartments();
-                    updateTables();
-                    insert.setVisible(false);
-                    insert.getInsertField().setText("");
+                    updateDataGUI();
                 }
                 else if (insert.getTitle().equals("Funktion hinzufügen")){
                     company.getFunctions().add(insert.getInsertField().getText());
                     company.writeFunctions();
-                    updateTables();
-                    insert.setVisible(false);
-                    insert.getInsertField().setText("");
+                    updateDataGUI();
                 }
                 else if (insert.getTitle().equals("Team hinzufügen")){
                     company.getTeams().add(insert.getInsertField().getText());
                     company.writeTeams();
-                    updateTables();
-                    insert.setVisible(false);
-                    insert.getInsertField().setText("");
+                    updateDataGUI();
                 }
+
+                //____________
+
+                else if (insert.getTitle().equals("Department bearbeiten")){
+                    for (int i = 0; i < frame.getDataTab().getDepartmentList().getModel().getSize(); i++){
+                        if (frame.getDataTab().getDepartmentList().getModel().getElementAt(i).equals(frame.getDataTab().getDepartmentList().getSelectedValue().toString())){
+                            //frame.getDataTab().getDepartmentList().getModel(). = insert.getInsertField().getText();
+                        }
+                    }
+                    company.writeDepartments();
+                    updateDataGUI();
+                }
+                else if (insert.getTitle().equals("Funktion bearbeiten")){
+
+                    company.writeFunctions();
+                    updateDataGUI();
+                }
+                else if (insert.getTitle().equals("Team bearbeitenn")){
+                    company.getTeams().add(insert.getInsertField().getText());
+                    company.writeTeams();
+                    updateDataGUI();
+                }
+
             }
+
+
 
         }
 
+
     }
+
+
 
     class listSelection implements ListSelectionListener{
         @Override
