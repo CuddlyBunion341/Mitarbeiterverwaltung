@@ -1,5 +1,6 @@
 package controller;
 
+import data.DataHandler;
 import gui.*;
 import model.company.Company;
 import model.company.Person;
@@ -12,9 +13,11 @@ import view.LoggedOut;
 
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.xml.crypto.Data;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RectangularShape;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Vector;
 
@@ -31,6 +34,15 @@ public class ViewController extends JFrame implements ActionListener {
         login.getShowPassword().addActionListener(this);
     }
 
+    public void updateTables(){
+        frame.getEmployeeTab().getEmployeeList().setListData(company.getEmployees());
+        frame.getAssigmentTab().getEmployeeList().setListData(company.getEmployees());
+        frame.getOverviewTab().getEmployeeList().setListData(company.getEmployees());
+        frame.getEmployeeTab().getEmployeeList().updateUI();
+        frame.getAssigmentTab().getEmployeeList().updateUI();
+        frame.getOverviewTab().getEmployeeList().updateUI();
+    }
+
     public void initializeMainFrame(Person person){
         //prepare mainFrame
         model = new Company("Eingeloggt als " + person.getName());
@@ -41,12 +53,25 @@ public class ViewController extends JFrame implements ActionListener {
         frame.getOverviewTab().getFunctionList().setListData(new Vector());
         frame.getOverviewTab().getTeamList().setListData(new Vector());
 
+
         //addEventListeners
-        frame.getEmployeeTab().getDelBtn().addActionListener(this);
-        frame.getDataTab().getDepartmentPanel().getAddBtn().addActionListener(this);
-        frame.getOverviewTab().getEmployeeList().addListSelectionListener(new listSelection());
-        frame.getOverviewTab().getDepartmentFilter().addActionListener(this);
-        frame.getEmployeeTab().getAddBtn().addActionListener(this);
+        if (frame.getEmployeeTab() != null){
+            frame.getEmployeeTab().getEmployeeList().setEnabled(false);
+            frame.getEmployeeTab().getDelBtn().addActionListener(this);
+            frame.getEmployeeTab().getAddBtn().addActionListener(this);
+            frame.getEmployeeTab().getEditBtn().addActionListener(this);
+        }
+        if (frame.getDataTab() != null){
+            frame.getDataTab().getDepartmentPanel().getAddBtn().addActionListener(this);
+        }
+        if (frame.getOverviewTab() != null){
+            frame.getOverviewTab().getEmployeeList().addListSelectionListener(new listSelection());
+            frame.getOverviewTab().getDepartmentFilter().addActionListener(this);
+        }
+
+        frame.getAssigmentTab().getEmployeeList().addListSelectionListener(new listSelection2());
+
+        //Namenseingabe
         frame.getOverviewTab().getNameFilter().getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -77,12 +102,11 @@ public class ViewController extends JFrame implements ActionListener {
                 }
             }
         });
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //result of depFilter
-        Vector<Person> result = company.getEmployees();
 
         //login
         if (e.getSource() == login.getLoginButton()) {
@@ -111,69 +135,73 @@ public class ViewController extends JFrame implements ActionListener {
 
         //Filter nach Department
         if (e.getSource() == frame.getOverviewTab().getDepartmentFilter()){
-            if (frame.getOverviewTab().getDepartmentFilter().getSelectedItem().toString().equals("Alle")){
-                result = company.getEmployees();
-            }
-            else{
-                result = null;
-                result = new Vector<Person>();
-                for (int i = 0; i < company.getEmployees().size(); i++){
-                    if (company.getEmployees().get(i).getDepartment().equals(frame.getOverviewTab().getDepartmentFilter().getSelectedItem().toString())){
-                        result.add(company.getEmployees().get(i));
-                    }
+            Vector<Person> result = new Vector<Person>((Collection<? extends Person>) frame.getEmployeeTab().getEmployeeList().getModel());
+            //geht???
+            for (int i = 0; i < result.size(); i++){
+                if (!result.get(i).getDepartment().equals(frame.getOverviewTab().getDepartmentFilter().getSelectedItem())){
+                    result.remove(i);
                 }
             }
             frame.getOverviewTab().getEmployeeList().setListData(result);
             frame.getOverviewTab().getEmployeeList().updateUI();
         }
 
+        //Filet nach Funktion
+        if (e.getSource() == frame.getOverviewTab().getFunctionFilter()){
+
+        }
+
         //Filter nach Team
         if (e.getSource() == frame.getOverviewTab().getTeamFilter()){
-           Vector<Person> result2 = new Vector<Person>();
-            if (frame.getOverviewTab().getTeamFilter().getSelectedItem().toString().equals("Alle")){
-                result2 = result;
+
+        }
+
+        //Neuer Mitarbeiter
+        if (frame.getEmployeeTab() != null){
+            if (e.getSource() == frame.getEmployeeTab().getAddBtn()){
+                System.out.println("salatsose");
+                String[] splited = frame.getEmployeeTab().getNameField().getText().split(" ");
+                Person person = new Person(splited[0], splited[1], "");
+                if (frame.getEmployeeTab().getAdminCheckBox().isSelected()){
+                    person.setAdmin(true);
+                }
+                if (frame.getEmployeeTab().getHrCheckBox().isSelected()){
+                    person.setHr(true);
+                }
+                company.getEmployees().add(person);
+                company.writeEmployees();
+                updateTables();
             }
-            else{
-                for (int i = 0; i < result.size(); i++){
-                    if (result.get(i).getTeams().contains(frame.getOverviewTab().getTeamFilter().getSelectedItem().toString())){
-                        result2.add(result.get(i));
+
+            //Mitarbeiter entfernen
+            if (e.getSource() == frame.getEmployeeTab().getDelBtn()){
+                for (int i = 0; i < company.getEmployees().size(); i++){
+                    if (company.getEmployees().get(i).getName().equals(frame.getEmployeeTab().getNameField().getText())){
+                        company.getEmployees().remove(i);
+                        updateTables();
+                        frame.getEmployeeTab().getNameField().setText("");
+                        frame.getEmployeeTab().getHrCheckBox().setSelected(false);
+                        frame.getEmployeeTab().getAdminCheckBox().setSelected(false);
+                        company.writeEmployees();
+                        break;
                     }
                 }
-                frame.getOverviewTab().getTeamList().setListData(result2);
-                frame.getOverviewTab().getTeamList().updateUI();
             }
-        }
 
-        //Andere Filter
-        if (e.getSource() == frame.getEmployeeTab().getAddBtn()){
-            String[] splited = frame.getEmployeeTab().getNameField().getText().split(" ");
-            Person person = new Person(splited[0], splited[1], "");
-            if (frame.getEmployeeTab().getAdminCheckBox().isSelected()){
-                person.setAdmin(true);
+        }
+        if (frame.getDataTab() != null){
+            //Mitarbeiter bearbeiten
+            if (e.getSource() == frame.getDataTab().getDepartmentPanel().getEditBtn()){
+                for (int i = 0; i < company.getEmployees().size(); i++){
+                    if (frame.getEmployeeTab().getNameField().equals(company.getEmployees().get(i).getName())){
+                        company.getEmployees().get(i).setHr(frame.getEmployeeTab().getHrCheckBox().isSelected());
+                        company.getEmployees().get(i).setAdmin(frame.getEmployeeTab().getAdminCheckBox().isSelected());
+                        updateTables();
+                        company.writeEmployees();
+                    }
+                }
             }
-            if (frame.getEmployeeTab().getHrCheckBox().isSelected()){
-                person.setHr(true);
-            }
-            company.getEmployees().add(person);
-            frame.getEmployeeTab().getEmployeeList().setListData(company.getEmployees());
         }
-        if (e.getSource() == frame.getEmployeeTab().getDelBtn()){
-            Person person = company.getEmployees().get(frame.getEmployeeTab().getEmployeeList().getSelectedIndex());
-            company.getEmployees().remove(person);
-            frame.getEmployeeTab().getEmployeeList().setListData(company.getEmployees());
-        }
-        if (e.getSource() == frame.getDataTab().getDepartmentPanel().getAddBtn()){
-            //company.getDepartments().add(frame.getDataTab().getDepartmentPanel().get);
-        }
-        /*
-        if (e.getSource() == frame.getDataTab().g){
-            //company.getDepartments().add(frame.getDataTab().getDepartmentPanel().getName());
-        }
-        if (e.getSource() == frame.getDataTab().getAddBtn){
-            //company.getDepartments().add(frame.getDataTab().getDepartmentPanel().getName());
-        }
-
-         */
 
     }
 
@@ -181,7 +209,8 @@ public class ViewController extends JFrame implements ActionListener {
         @Override
         public void valueChanged(ListSelectionEvent e) {
             try{
-                Person person = company.getEmployees().get(frame.getOverviewTab().getEmployeeList().getSelectedIndex());
+
+                Person person = (Person) frame.getOverviewTab().getEmployeeList().getSelectedValue();
                 frame.getOverviewTab().getNameField().setText(person.getName());
                 frame.getOverviewTab().getDepartmentField().setText(person.getDepartment());
                 frame.getOverviewTab().getFunctionList().setListData(person.getFunctions());
@@ -191,6 +220,25 @@ public class ViewController extends JFrame implements ActionListener {
                 frame.getOverviewTab().getDepartmentField().updateUI();
                 frame.getOverviewTab().getFunctionList().updateUI();
                 frame.getOverviewTab().getTeamList().updateUI();
+            }
+            catch (ArrayIndexOutOfBoundsException ignored){}
+        }
+    }
+
+    class listSelection2 implements ListSelectionListener{
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            try{
+                Person person = company.getEmployees().get(frame.getAssigmentTab().getEmployeeList().getSelectedIndex());
+                frame.getAssigmentTab().getNameField().setText(person.getName());
+                frame.getAssigmentTab().getDepartmentField().setText(person.getDepartment());
+                //set funktion kombo box
+                //set team kombo box
+
+                frame.getAssigmentTab().getNameField().updateUI();
+                frame.getAssigmentTab().getDepartmentField().updateUI();
+                frame.getAssigmentTab().getFunctionsBox().updateUI();
+                frame.getAssigmentTab().getTeamsBox().updateUI();
             }
             catch (ArrayIndexOutOfBoundsException ignored){}
         }
