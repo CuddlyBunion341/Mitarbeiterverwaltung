@@ -18,11 +18,6 @@ public class Company {
         functions = DataHandler.readFunctions();
         departments = DataHandler.readDepartments();
 
-        Person hans = new Person("Hans", "Jansen", "hans.png");
-        hans.setPassword("123");
-        hans.setAdmin(true);
-        hans.setHr(true);
-
         employees.add(hans);
     }
 
