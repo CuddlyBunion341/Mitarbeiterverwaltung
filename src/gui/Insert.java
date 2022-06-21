@@ -34,4 +34,9 @@ public class Insert extends JFrame {
     public JTextField getInsertField() {
         return insertField;
     }
+
+    public void setInsertField(JTextField insertField) {
+        this.insertField = insertField;
+    }
+
 }

@@ -16,7 +16,7 @@ import java.util.Vector;
 
 public class ViewController extends JFrame implements ActionListener {
     Login login = new Login();
-    Insert insert;
+    Insert insert = new Insert("Insert");
     Company company = new Company("Mitarbeiterverwaltung v2.31");
     Company model;
     MainFrame frame;
@@ -26,6 +26,7 @@ public class ViewController extends JFrame implements ActionListener {
         login.getLoginButton().addActionListener(this);
         login.getResetButton().addActionListener(this);
         login.getShowPassword().addActionListener(this);
+        insert.setVisible(false);
     }
 
     public void updateTables(){
@@ -127,6 +128,7 @@ public class ViewController extends JFrame implements ActionListener {
                 if (login.getUserField().getText().equals(company.getEmployees().get(i).getName())){
                     if (company.getEmployees().get(i).authenticate(login.getPasswordField().getText())){
                         initializeMainFrame(company.getEmployees().get(i));
+                        login.getFrame().setVisible(false);
                         login.getFrame().dispose();
                         logBook.addEntry(new UserAction(company.getEmployees().get(i), 4));
                         break;
@@ -208,16 +210,44 @@ public class ViewController extends JFrame implements ActionListener {
         if (frame.getDataTab() != null){
             //Add Department
             if (e.getSource() == frame.getDataTab().getDepartmentPanel().getAddBtn()){
-                insert = new Insert("Department hinzufügen");
+                insert.setTitle("Department hinzufügen");
+                insert.setVisible(true);
             }
+            //Add Function
+            if (e.getSource() == frame.getDataTab().getFunctionsPanel().getAddBtn()){
+                insert.setTitle("Funktion hinzufügen");
+                insert.setVisible(true);
+            }
+            //Add Team
+            if (e.getSource() == frame.getDataTab().getTeamsPanel().getAddBtn()){
+                insert.setTitle("Team hinzufügen");
+                insert.setVisible(true);
+            }
+
+            //Add Department, Team or Function
             if (e.getSource() == insert.getSubmit()){
                 if (insert.getTitle().equals("Department hinzufügen")){
                     company.getDepartments().add(insert.getInsertField().getText());
+                    company.writeDepartments();
                     updateTables();
-                    insert.dispose();
+                    insert.setVisible(false);
+                    insert.getInsertField().setText("");
+                }
+                else if (insert.getTitle().equals("Funktion hinzufügen")){
+                    company.getFunctions().add(insert.getInsertField().getText());
+                    company.writeFunctions();
+                    updateTables();
+                    insert.setVisible(false);
+                    insert.getInsertField().setText("");
+                }
+                else if (insert.getTitle().equals("Team hinzufügen")){
+                    company.getTeams().add(insert.getInsertField().getText());
+                    company.writeTeams();
+                    updateTables();
+                    insert.setVisible(false);
+                    insert.getInsertField().setText("");
                 }
             }
-
 
         }
 
