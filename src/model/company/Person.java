@@ -45,7 +45,7 @@ public class Person {
         return this.lastName;
     }
 
-    public String getName() {
+    public static String getName() {
         return this.firstName + " " + this.lastName;
     }
 
