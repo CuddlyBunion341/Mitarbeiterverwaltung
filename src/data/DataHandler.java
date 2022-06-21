@@ -48,18 +48,6 @@ public class DataHandler {
         }
     }
 
-    public static void writeEmployees(Vector<Person> people) {
-        try {
-            FileWriter writer = new FileWriter(personPath,true);
-            for (Person person : people) {
-                writer.write(person.getFirstName() + ";" + person.getLastName() + ";" + person.getPhotoPath() + "\n");
-            }
-            writer.close();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static Vector<String> readFunctions() {
         Vector<Object> functions = readFile(functionPath, line -> line);
         return functions.stream().map(String::valueOf).collect(Vector::new, Vector::add, Vector::addAll);
@@ -122,6 +110,18 @@ public class DataHandler {
             FileWriter writer = new FileWriter(departmentPath,true);
             for (String department : departments) {
                 writer.write(department);
+            }
+            writer.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeEmployees(Vector<Person> people) {
+        try {
+            FileWriter writer = new FileWriter(personPath,true);
+            for (Person person : people) {
+                writer.write(person.getFirstName() + ";" + person.getLastName() + ";" + person.getPhotoPath() + "\n");
             }
             writer.close();
         } catch(IOException e) {

@@ -97,6 +97,4 @@ public class EmployeeTab extends JPanel {
     public JButton getEditBtn() {
         return this.editBtn;
     }
-    
-
 }
