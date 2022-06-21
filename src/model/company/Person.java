@@ -103,4 +103,27 @@ public class Person {
         this.department = department;
     }
 
+    public static Person fromCSV(String csv) {
+        String[] parts = csv.split(";");
+        String firstName = parts[0];
+        String lastName = parts[1];
+        String photoPath = parts[2];
+        boolean isHR = parts[3].equals("true");
+        boolean isAdmin = parts[4].equals("true");
+        String teams = parts[5]; // todo
+        String functions = parts[6]; // todo
+        int passwordHash = Integer.parseInt(parts[7]);
+        Person person = new Person(firstName, lastName, photoPath);
+        person.setHr(isHR);
+        person.setAdmin(isAdmin);
+        person.setPasswordHash(passwordHash);
+        return person;
+    }
+
+    public String toCSV() {
+        String csv = firstName + ";" + lastName + ";" + photoPath + ";" + isHr + ";" + isAdmin
+                + ";" + teams + ";" + functions + ";" + passwordHash;
+        return csv;
+    };
+
 }

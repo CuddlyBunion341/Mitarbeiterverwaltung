@@ -8,12 +8,14 @@ public class Company {
     private Vector<Person> employees;
     private Vector<String> teams;
     private Vector<String> departments;
+    private Vector<String> functions;
     private final String companyName;
 
     public Company(String name) {
         companyName = name;
         employees = DataHandler.readEmployees();
         teams = DataHandler.readTeams();
+        functions = DataHandler.readFunctions();
         // departments = DataHandler.readDepar();
 
         Person hans = new Person("Hans", "Jansen", "hans.png");
@@ -33,25 +35,14 @@ public class Company {
     }
 
     public Vector<String> getDepartments() {
-        Vector<String> departments = new Vector<>();
-        departments.add("Department1");
-        departments.add("Department2");
-        departments.add("Department3");
-        departments.add("Department4");
-        departments.add("Department5");
         return departments;
     }
 
     public String getCompanyName() {
-        return this.companyName;
+        return companyName;
     }
 
     public Vector<String> getFunctions() {
-        Vector<String> functions = new Vector<>();
-        functions.add("HR");
-        functions.add("Admin");
-        functions.add("Developer");
-        functions.add("Tester");
         return functions;
     }
 }
