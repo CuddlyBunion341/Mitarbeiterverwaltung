@@ -20,7 +20,7 @@ import main.java.model.company.Person;
 public class AssigmentTab extends JPanel {
     private JList<Person> employeeList;
     private JTextField nameField;
-    private JTextField departmentField;
+    private JComboBox<String> departmentBox;
     private JComboBox<String> functionsBox;
     private JComboBox<String> teamsBox;
     private Company model;
@@ -35,7 +35,7 @@ public class AssigmentTab extends JPanel {
     private void init() {
         employeeList = new JList<>(model.getEmployees());
         nameField = new JTextField();
-        departmentField = new JTextField();
+        departmentBox = new JComboBox<>(model.getDepartments());
         functionsBox = new JComboBox<>(model.getFunctions());
         teamsBox = new JComboBox<>(model.getTeams());
     }
@@ -54,7 +54,7 @@ public class AssigmentTab extends JPanel {
         detailsContentPanel.add(new JLabel("Name: "));
         detailsContentPanel.add(nameField);
         detailsContentPanel.add(new JLabel("Abteilung: "));
-        detailsContentPanel.add(departmentField);
+        detailsContentPanel.add(departmentBox);
         detailsContentPanel.add(new JLabel("Funktion: "));  
         detailsContentPanel.add(functionsBox);
         detailsContentPanel.add(new JLabel("Team: "));
@@ -74,8 +74,8 @@ public class AssigmentTab extends JPanel {
         return this.nameField;
     }
 
-    public JTextField getDepartmentField() {
-        return this.departmentField;
+    public JComboBox getDepartmentBox() {
+        return this.departmentBox;
     }
 
     public JComboBox<String> getFunctionsBox() {

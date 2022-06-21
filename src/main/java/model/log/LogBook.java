@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
+import javax.swing.Action;
+
+import main.java.model.company.Person;
+
 /**
  * Logbook
  * @author Daniel Bengl
@@ -17,12 +21,19 @@ public class LogBook {
     private Vector<String> entries;
     private FileWriter file;
     private BufferedWriter writer;
-    private static final String path = "resource/csv/log.csv";
+    private static final String path = "resource/txt/log.txt";
+
+    public static void main(String[] args) {
+        // add a test log to logbook entries
+        Person test = new Person("Daniel","Bengl","1.png");
+        LogBook.getInstance().addEntry(new UserAction(test,ActionEnum.UNKNOWN_ACTION));
+        LogBook.getInstance().closeFile();
+    }
 
     private LogBook() {
         entries = new Vector<String>();
         try {
-            file = new FileWriter(path);
+            file = new FileWriter(path,true);
             writer = new BufferedWriter(file);
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,4 +89,11 @@ public class LogBook {
         }
     }
 
+    public String toString() {
+        String log = "";
+        for (String entry : entries) {
+            log += entry + "\n";
+        }
+        return log;
+    }
 }

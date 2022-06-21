@@ -1,0 +1,11 @@
+2022-06-21 22:36:41 Daniel Bengl did something
+2022-06-21 22:37:05 Daniel Bengl did something
+2022-06-21 22:37:45 Hans Jansen logged in
+2022-06-21 22:37:50 Hans Jansen logged out
+2022-06-21 22:38:11 Daniel Bengl logged in
+2022-06-21 22:38:26 Daniel Bengl did something
+2022-06-21 22:38:49 Daniel Bengl logged out
+2022-06-21 22:39:27 Hans Jansen logged in
+2022-06-21 22:39:35 Hans Jansen logged out
+2022-06-21 23:08:26 Daniel Bengl logged in
+2022-06-21 23:08:42 Daniel Bengl logged out

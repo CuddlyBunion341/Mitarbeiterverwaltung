@@ -8,13 +8,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import main.java.model.company.Company;
+import main.java.model.log.LogBook;
 
 /**
  * LogBookTab is a Tab used to view the logbook of a company.
  * @author Daniel Bengl
  */
 public class LogBookTab extends JPanel {
-    private JTextArea lookbookContents;
+    private JTextArea textArea;
 
     public LogBookTab(Company model) {
         super();
@@ -24,21 +25,25 @@ public class LogBookTab extends JPanel {
     }
 
     private void build() {
-        JScrollPane scrollPane = new JScrollPane(lookbookContents);
+        JScrollPane scrollPane = new JScrollPane(textArea);
         add(scrollPane, BorderLayout.CENTER);
     }
     
     private void init() {
-        lookbookContents = new JTextArea();
-        lookbookContents.setColumns(50);
-        lookbookContents.setEditable(false);
-        lookbookContents.setFont(new Font("Arial", Font.PLAIN, 16));
-        for (int i = 0; i < 50; i++) 
-            lookbookContents.append("[2022-05-07 11:32:16.113] Logbuch Eintrag Test " + i + "\n");
+        textArea = new JTextArea();
+        textArea.setColumns(50);
+        textArea.setEditable(false);
+        textArea.setFont(new Font("Arial", Font.PLAIN, 16));
+        for (String entry : LogBook.getInstance().getEntries())
+            textArea.append(entry);
     }
 
     // getters
     public JTextArea getTextarea() {
-        return lookbookContents;
+        return textArea;
+    }
+
+    public void update() {
+        textArea.setText(LogBook.getInstance().toString());
     }
 }

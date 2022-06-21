@@ -11,29 +11,26 @@ import main.java.model.company.Person;
  * @author Daniel Bengl
  */
 public class UserAction {
-    public static final int CREATE_PERSON = 0;
-    public static final int CHANGE_VALUE = 1;
-    public static final int SET_ASSIGNMENT = 2;
-    public static final int DELETE_PERSON = 3;
-    public static final int LOGIN_SUCCESS = 5;
-    public static final int LOGOUT_ACTION = 6;
-
     private String entry;
 
-    public UserAction(Person person, int action) {
+    public UserAction(Person person, ActionEnum action) {
         String time = getLocalTime();
-        entry = time + " ";
-        if (action == LOGIN_SUCCESS) entry += person.getName() + " logged in";
-        if (action == LOGOUT_ACTION) entry += person.getName() + " logged out";
+        entry = time + " " + person.getName() + " ";
+        if (action == ActionEnum.LOGIN_SUCCESS) entry += "logged in";
+        if (action == ActionEnum.LOGOUT_ACTION) entry += "logged out";
+        if (action == ActionEnum.UNKNOWN_ACTION) entry += "did something";
+        if (action == ActionEnum.CHANGE_VALUE) entry += "changed value";
+        System.out.println(person + Integer.toString(action.number()) + entry);
     }
-
-    public UserAction(Person admin, Person person, int action) {
+    
+    public UserAction(Person admin, Person person, ActionEnum action) {
         String time = getLocalTime();
         entry = time + " " + admin.getName() + " ";
-        if (action == CREATE_PERSON)  entry += "created " + person.getName();
-        if (action == CHANGE_VALUE)   entry += "changed " + person.getName();
-        if (action == SET_ASSIGNMENT) entry += "set assigment for " + person.getName();
-        if (action == DELETE_PERSON)  entry += "deleted " + person.getName();
+        if (action == ActionEnum.CREATE_PERSON)  entry += "created " + person.getName();
+        if (action == ActionEnum.CHANGE_VALUE)   entry += "updated " + person.getName();
+        if (action == ActionEnum.SET_ASSIGNMENT) entry += "set assigment for " + person.getName();
+        if (action == ActionEnum.DELETE_PERSON)  entry += "deleted " + person.getName();
+        System.out.println(person + Integer.toString(action.number()) + entry);
     }
 
     private String getLocalTime() {

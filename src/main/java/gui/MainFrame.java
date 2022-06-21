@@ -7,6 +7,7 @@ import javax.swing.event.ChangeListener;
 import main.java.model.company.Company;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
 
 /**
  * MainFrame is the main frame of the application.
@@ -23,6 +24,15 @@ public class MainFrame extends JFrame {
     private EmployeeTab employeeTab;
     private DataTab dataTab;
     private LogBookTab logBookTab;
+    
+    public MainFrame(Company model) {
+        this(model,false,false);
+    }
+
+    public MainFrame(Company model, boolean hrMode, boolean adminMode, WindowAdapter closeEvent) {
+        this(model,hrMode,adminMode);
+        this.addWindowListener(closeEvent);
+    }
 
     public MainFrame(Company model,boolean hrMode, boolean adminMode) {
         this.hrMode = hrMode;
