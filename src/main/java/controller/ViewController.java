@@ -51,7 +51,7 @@ public class ViewController extends JFrame implements ActionListener {
     }
 
     private DefaultComboBoxModel<String> createBoxModel(Vector<String> elements) {
-        Vector<String> clone = new Vector<String>(elements);
+        Vector<String> clone = new Vector<>(elements);
         clone.add(0, "-- alle --");
         return new DefaultComboBoxModel<>(clone);
     }
@@ -137,9 +137,16 @@ public class ViewController extends JFrame implements ActionListener {
         if (frame.getOverviewTab() != null) {
             frame.getOverviewTab().getEmployeeList().addListSelectionListener(new listSelection());
             frame.getOverviewTab().getDepartmentFilter().addActionListener(this);
+            frame.getOverviewTab().getTeamFilter().addActionListener(this);
+            frame.getOverviewTab().getFunctionFilter().addActionListener(this);
         }
 
-        frame.getAssigmentTab().getEmployeeList().addListSelectionListener(new listSelection2());
+        if (frame.getAssigmentTab() != null) {
+            frame.getAssigmentTab().getEmployeeList().addListSelectionListener(new listSelection2());
+        }
+
+
+        updateDesignations();
 
         // Namenseingabe
         frame.getOverviewTab().getNameFilter().getDocument().addDocumentListener(new DocumentListener() {
@@ -196,8 +203,6 @@ public class ViewController extends JFrame implements ActionListener {
                 }
             }
         });
-
-        updateDesignations();
     }
 
     @Override
@@ -220,10 +225,12 @@ public class ViewController extends JFrame implements ActionListener {
                     }
                 }
             }
+            return;
         }
         if (source == login.getResetButton()) {
             login.getUserField().setText("");
             login.getPasswordField().setText("");
+            return;
         }
         if (source == login.getShowPassword()) {
             if (login.getShowPassword().isSelected()) {
@@ -231,37 +238,29 @@ public class ViewController extends JFrame implements ActionListener {
             } else {
                 login.getPasswordField().setEchoChar('*');
             }
+            return;
         }
 
         // Filter nach Department
         OverviewTab overviewTab = frame.getOverviewTab();
+        System.out.println(source);
         if (source == overviewTab.getDepartmentFilter() || source == overviewTab.getFunctionFilter()
                 || source == overviewTab.getTeamFilter()) {
-            Vector<Person> filtered = company.getEmployees();
+            Vector<Person> filtered = new Vector<>(company.getEmployees());
             // Filter nach Department
             if (source == overviewTab.getDepartmentFilter()) {
                 String selectedDepartment = overviewTab.getDepartmentFilter().getSelectedItem().toString();
                 if (!selectedDepartment.equals("-- alle --")) {
-                    for (Person employee : filtered) {
-                        if (!employee.getDepartment().equals(selectedDepartment)) {
-                            filtered.remove(employee);
-                        }
-                    }
+                    filtered.removeIf(employee -> !employee.getDepartment().equals(selectedDepartment));
                 }
-
             }
 
             // Filter nach Funktion
             if (source == overviewTab.getFunctionFilter()) {
                 String selectedFunction = overviewTab.getFunctionFilter().getSelectedItem().toString();
-
                 if (!selectedFunction.equals("-- alle --")) {
 
-                    for (Person employee : filtered) {
-                        if (!employee.getFunctions().contains(selectedFunction)) {
-                            filtered.remove(employee);
-                        }
-                    }
+                    filtered.removeIf(employee -> !employee.getFunctions().contains(selectedFunction));
                 }
             }
 
@@ -271,17 +270,12 @@ public class ViewController extends JFrame implements ActionListener {
 
                 if (!selectedTeam.equals("-- alle --")) {
 
-                    for (Person employee : filtered) {
-                        if (!employee.getTeams().contains(selectedTeam)) {
-                            filtered.remove(employee);
-                        }
-                    }
+                    filtered.removeIf(employee -> !employee.getTeams().contains(selectedTeam));
                 }
-
             }
-            System.err.println("USER FILTER" + filtered);
-            System.err.println("thing" + company.getEmployees());
-            updateEmployeeLists();
+            overviewTab.getEmployeeList().setListData(filtered);
+            overviewTab.getEmployeeList().updateUI();
+            return;
         }
 
         EmployeeTab employeeTab;
@@ -302,6 +296,7 @@ public class ViewController extends JFrame implements ActionListener {
                 company.writeEmployees();
                 updateEmployeeLists();
                 addLog(new UserAction(this.user, person, ActionEnum.CREATE_PERSON));
+                return;
             }
 
             // Mitarbeiter entfernen
@@ -318,6 +313,7 @@ public class ViewController extends JFrame implements ActionListener {
                         break;
                     }
                 }
+                return;
             }
 
             // Mitarbeiter bearbeiten
@@ -335,16 +331,19 @@ public class ViewController extends JFrame implements ActionListener {
             if (source == departmentPanel.getAddBtn()) {
                 insert.setTitle("Department hinzufügen");
                 insert.setVisible(true);
+                return;
             }
             // Add Function
             if (source == functionsPanel.getAddBtn()) {
                 insert.setTitle("Funktion hinzufügen");
                 insert.setVisible(true);
+                return;
             }
             // Add Team
             if (source == teamsPanel.getAddBtn()) {
                 insert.setTitle("Team hinzufügen");
                 insert.setVisible(true);
+                return;
             }
 
             // ____________
@@ -353,16 +352,19 @@ public class ViewController extends JFrame implements ActionListener {
             if (source == departmentPanel.getEditBtn()) {
                 insert.setTitle("Department bearbeiten");
                 insert.setVisible(true);
+                return;
             }
             // Edit Function
             if (source == functionsPanel.getEditBtn()) {
                 insert.setTitle("Funktion bearbeiten");
                 insert.setVisible(true);
+                return;
             }
             // Edit Team
             if (source == teamsPanel.getEditBtn()) {
                 insert.setTitle("Team bearbeiten");
                 insert.setVisible(true);
+                return;
             }
 
             // Delete
@@ -370,16 +372,19 @@ public class ViewController extends JFrame implements ActionListener {
                 company.getDepartments().remove(departmentList.getSelectedValue());
                 company.writeDepartments();
                 updateDesignations();
+                return;
             }
             if (source == functionsPanel.getRemBtn()) {
                 company.getFunctions().remove(functionsList.getSelectedValue());
                 company.writeFunctions();
                 updateDesignations();
+                return;
             }
             if (source == teamsPanel.getRemBtn()) {
                 company.getTeams().remove(teamsList.getSelectedValue());
                 company.writeTeams();
                 updateDesignations();
+                return;
             }
 
             // Department, Team or Function
@@ -429,6 +434,7 @@ public class ViewController extends JFrame implements ActionListener {
                     updateDesignations();
                 }
                 addLog(new UserAction(this.user, ActionEnum.UNKNOWN_ACTION));
+                return;
             }
         }
     }
@@ -438,11 +444,11 @@ public class ViewController extends JFrame implements ActionListener {
         public void valueChanged(ListSelectionEvent e) {
             try {
                 Person person = (Person) frame.getOverviewTab().getEmployeeList().getSelectedValue();
+                if (person == null) return;
                 frame.getOverviewTab().getNameField().setText(person.getName());
                 frame.getOverviewTab().getDepartmentField().setText(person.getDepartment());
                 frame.getOverviewTab().getFunctionList().setListData(person.getFunctions());
                 frame.getOverviewTab().getTeamList().setListData(person.getTeams());
-
                 frame.getOverviewTab().getNameField().updateUI();
                 frame.getOverviewTab().getDepartmentField().updateUI();
                 frame.getOverviewTab().getFunctionList().updateUI();
