@@ -248,22 +248,40 @@ public class ViewController extends JFrame implements ActionListener {
                 insert.setVisible(true);
             }
 
+            //Delete
+            if (e.getSource() == frame.getDataTab().getDepartmentPanel().getRemBtn()){
+                company.getDepartments().remove(frame.getDataTab().getDepartmentList().getSelectedValue().toString());
+                updateDataGUI();
+                company.writeDepartments();
+            }
+            if (e.getSource() == frame.getDataTab().getFunctionsPanel().getRemBtn()){
+                company.getDepartments().remove(frame.getDataTab().getFunctionsList().getSelectedValue().toString());
+                updateDataGUI();
+                company.writeFunctions();
+            }
+            if (e.getSource() == frame.getDataTab().getTeamsPanel().getRemBtn()){
+                company.getDepartments().remove(frame.getDataTab().getTeamsList().getSelectedValue().toString());
+                updateDataGUI();
+                company.writeTeams();
+            }
+
+
             //Department, Team or Function
             if (e.getSource() == insert.getSubmit()){
                 if (insert.getTitle().equals("Department hinzufügen")){
                     company.getDepartments().add(insert.getInsertField().getText());
-                    company.writeDepartments();
                     updateDataGUI();
+                    company.writeDepartments();
                 }
                 else if (insert.getTitle().equals("Funktion hinzufügen")){
                     company.getFunctions().add(insert.getInsertField().getText());
-                    company.writeFunctions();
                     updateDataGUI();
+                    company.writeFunctions();
                 }
                 else if (insert.getTitle().equals("Team hinzufügen")){
                     company.getTeams().add(insert.getInsertField().getText());
-                    company.writeTeams();
                     updateDataGUI();
+                    company.writeTeams();
                 }
 
                 //____________
@@ -271,21 +289,29 @@ public class ViewController extends JFrame implements ActionListener {
                 else if (insert.getTitle().equals("Department bearbeiten")){
                     for (int i = 0; i < frame.getDataTab().getDepartmentList().getModel().getSize(); i++){
                         if (frame.getDataTab().getDepartmentList().getModel().getElementAt(i).equals(frame.getDataTab().getDepartmentList().getSelectedValue().toString())){
-                            //frame.getDataTab().getDepartmentList().getModel(). = insert.getInsertField().getText();
+                            company.getDepartments().set(i, insert.getInsertField().getText());
                         }
                     }
-                    company.writeDepartments();
                     updateDataGUI();
+                    company.writeDepartments();
                 }
                 else if (insert.getTitle().equals("Funktion bearbeiten")){
-
-                    company.writeFunctions();
+                    for (int i = 0; i < frame.getDataTab().getFunctionsList().getModel().getSize(); i++){
+                        if (frame.getDataTab().getFunctionsList().getModel().getElementAt(i).equals(frame.getDataTab().getFunctionsList().getSelectedValue().toString())){
+                            company.getFunctions().set(i, insert.getInsertField().getText());
+                        }
+                    }
                     updateDataGUI();
+                    company.writeFunctions();
                 }
                 else if (insert.getTitle().equals("Team bearbeitenn")){
-                    company.getTeams().add(insert.getInsertField().getText());
-                    company.writeTeams();
+                    for (int i = 0; i < frame.getDataTab().getTeamsList().getModel().getSize(); i++){
+                        if (frame.getDataTab().getTeamsList().getModel().getElementAt(i).equals(frame.getDataTab().getTeamsList().getSelectedValue().toString())){
+                            company.getTeams().set(i, insert.getInsertField().getText());
+                        }
+                    }
                     updateDataGUI();
+                    company.writeTeams();
                 }
 
             }
