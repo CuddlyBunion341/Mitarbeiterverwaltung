@@ -17,8 +17,6 @@ public class Company {
         teams = DataHandler.readTeams();
         functions = DataHandler.readFunctions();
         departments = DataHandler.readDepartments();
-
-        employees.add(hans);
     }
 
     public Vector<Person> getEmployees() {
