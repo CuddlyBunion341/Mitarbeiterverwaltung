@@ -17,6 +17,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Vector;
@@ -174,14 +175,10 @@ public class ViewController extends JFrame implements ActionListener {
                     frame.getOverviewTab().getEmployeeList().setListData(company.getEmployees());
                     frame.getOverviewTab().getEmployeeList().updateUI();
                 } else {
-                    Vector<Person> result = frame.getOverviewTab().getEmployeeList().getModel();
-                    for (int i = 0; i < company.getEmployees().size(); i++) {
-                        if (company.getEmployees().get(i).getName().toLowerCase(Locale.ROOT)
-                                .contains(frame.getOverviewTab().getNameFilter().getText().toLowerCase(Locale.ROOT))) {
-                            result.add(company.getEmployees().get(i));
-                        }
-                    }
-                    frame.getOverviewTab().getEmployeeList().setListData(result);
+                    String nameFilter = frame.getOverviewTab().getNameField().getText().toLowerCase(Locale.ROOT);
+                    Vector<Person> prefiltered = new Vector<Person>((Collection<? extends Person>) frame.getOverviewTab().getEmployeeList().getModel());
+                    prefiltered.removeIf(employee -> !employee.getName().toLowerCase(Locale.ROOT).contains(nameFilter));
+                    frame.getOverviewTab().getEmployeeList().setListData(prefiltered);
                     frame.getOverviewTab().getEmployeeList().updateUI();
                 }
             }
