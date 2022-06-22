@@ -67,3 +67,5 @@
 2022-06-22 08:58:34 Daniel Bengl did something
 2022-06-22 08:58:37 Daniel Bengl did something
 2022-06-22 08:58:41 Daniel Bengl logged out
+2022-06-22 08:59:20 Daniel Bengl logged in
+2022-06-22 09:00:24 Daniel Bengl logged out

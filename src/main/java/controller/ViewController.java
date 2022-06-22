@@ -292,30 +292,43 @@ public class ViewController extends JFrame implements ActionListener {
                 company.getEmployees().add(person);
                 company.writeEmployees();
                 updateEmployeeLists();
+                updateDesignations();
                 addLog(new UserAction(this.user, person, ActionEnum.CREATE_PERSON));
                 return;
             }
 
             // Mitarbeiter entfernen
             if (source == employeeTab.getDelBtn()) {
-                for (Person employee : company.getEmployees()) {
-                    if (employee.getName().equals(nameField.getText())) {
-                        nameField.setText("");
-                        hrBox.setSelected(false);
-                        adminBox.setSelected(false);
-                        company.getEmployees().remove(employee);
-                        company.writeEmployees();
-                        updateEmployeeLists();
-                        addLog(new UserAction(this.user, employee, ActionEnum.DELETE_PERSON));
-                        break;
+                for (int i = 0; i < company.getEmployees().size(); i++){
+                    if (company.getEmployees().get(i).equals(frame.getEmployeeTab().getEmployeeList().getSelectedValue())){
+                        addLog(new UserAction(this.user, company.getEmployees().get(i), ActionEnum.DELETE_PERSON));
+                        company.getEmployees().remove(i);
                     }
                 }
+                company.writeEmployees();
+                updateEmployeeLists();
+                updateDesignations();
                 return;
             }
 
             // Mitarbeiter bearbeiten
             if (source == employeeTab.getEditBtn()){
-
+                for (int i = 0; i < company.getEmployees().size(); i++){
+                    if (company.getEmployees().get(i).equals(frame.getEmployeeTab().getEmployeeList().getSelectedValue())){
+                        String[] splited = nameField.getText().split(" ");
+                        Person person = new Person(splited[0], splited[1], "");
+                        if (employeeTab.getAdminCheckBox().isSelected())
+                            person.setAdmin(true);
+                        if (employeeTab.getHrCheckBox().isSelected())
+                            person.setHr(true);
+                        company.getEmployees().set(i, person);
+                        addLog(new UserAction(this.user, person, ActionEnum.UPDATE_PERSON));
+                    }
+                }
+                company.writeEmployees();
+                updateEmployeeLists();
+                updateDesignations();
+                return;
             }
 
         }
