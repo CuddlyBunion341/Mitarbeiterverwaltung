@@ -23,6 +23,8 @@ public class Person implements Comparable {
         this.firstName = fName;
         this.lastName = lName;
         this.photoPath = photoPath;
+        teams = new Vector<>();
+        functions = new Vector<>();
     }
 
     public String getPhotoPath() {

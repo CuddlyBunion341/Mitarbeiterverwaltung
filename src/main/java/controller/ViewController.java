@@ -270,12 +270,14 @@ public class ViewController extends JFrame implements ActionListener {
             frame.getOverviewTab().getEmployeeList().updateUI();
         }
 
-        EmployeeTab employeeTab;
-        if ((employeeTab = frame.getEmployeeTab()) != null) {
+        System.out.println("DNITGNFIjf j8290r492 9r 2");
+        EmployeeTab employeeTab = frame.getEmployeeTab();
+        if (employeeTab != null) {
             JTextField nameField = employeeTab.getNameField();
             JCheckBox hrBox = employeeTab.getHrCheckBox();
             JCheckBox adminBox = employeeTab.getAdminCheckBox();
             // Neuer Mitarbeiter
+            System.out.println("MITARBEITER DA");
             if (source == employeeTab.getAddBtn()) {
                 System.out.println("MITARBEITER DA");
                 String[] splited = nameField.getText().split(" ");
@@ -460,7 +462,7 @@ public class ViewController extends JFrame implements ActionListener {
                         }
                     }
                 }
-                addLog(new UserAction(this.user, ActionEnum.UNKNOWN_ACTION));
+                addLog(new UserAction(this.user, ActionEnum.CHANGE_VALUE));
             }
         }
     }

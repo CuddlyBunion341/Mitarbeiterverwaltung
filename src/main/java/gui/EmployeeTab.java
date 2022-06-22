@@ -27,6 +27,7 @@ public class EmployeeTab extends JPanel {
     private JButton addBtn;
     private JButton delBtn;
     private JButton editBtn;
+    private ListEditPanel selectionPanel;
 
     private Company model;
 
@@ -40,8 +41,6 @@ public class EmployeeTab extends JPanel {
         setLayout(new BorderLayout());
         JPanel mainPanel = Util.fieldset("Personen bearbeiten");
         mainPanel.setLayout(new BorderLayout());
-        ListEditPanel selectionPanel = new ListEditPanel(employeeList,"Übersicht");
-
         JPanel detailPanel = Util.fieldset("Detail");
         detailPanel.setLayout(new BorderLayout());
         JPanel detailContent = new JPanel(new GridLayout(4,2));
@@ -62,12 +61,10 @@ public class EmployeeTab extends JPanel {
     }
     private void init() {
         employeeList = new JList<>(model.getEmployees());
+        selectionPanel = new ListEditPanel(employeeList,"Übersicht");
         nameField = new JTextField();
         hrCheckBox = new JCheckBox();
         adminCheckBox = new JCheckBox();    
-        addBtn = new JButton("+");
-        delBtn = new JButton("x");
-        editBtn = new JButton("E");
         imageLabel = new JLabel("Bild");
     }
     // getters
@@ -93,14 +90,14 @@ public class EmployeeTab extends JPanel {
     }
 
     public JButton getAddBtn() {
-        return this.addBtn;
+        return selectionPanel.getAddBtn();
     }
 
     public JButton getDelBtn() {
-        return this.delBtn;
+        return selectionPanel.getRemBtn();
     }
 
     public JButton getEditBtn() {
-        return this.editBtn;
+        return selectionPanel.getEditBtn();
     }
 }
