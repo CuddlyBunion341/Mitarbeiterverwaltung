@@ -385,18 +385,21 @@ public class ViewController extends JFrame implements ActionListener {
                 company.getDepartments().remove(departmentList.getSelectedValue());
                 company.writeDepartments();
                 updateDesignations();
+                addLog(new UserAction(this.user, ActionEnum.CHANGE_VALUE));
                 return;
             }
             if (source == functionsPanel.getRemBtn()) {
                 company.getFunctions().remove(functionsList.getSelectedValue());
                 company.writeFunctions();
                 updateDesignations();
+                addLog(new UserAction(this.user, ActionEnum.CHANGE_VALUE));
                 return;
             }
             if (source == teamsPanel.getRemBtn()) {
                 company.getTeams().remove(teamsList.getSelectedValue());
                 company.writeTeams();
                 updateDesignations();
+                addLog(new UserAction(this.user, ActionEnum.CHANGE_VALUE));
                 return;
             }
 
@@ -407,6 +410,7 @@ public class ViewController extends JFrame implements ActionListener {
                         company.getDepartments().add(insert.getInsertField().getText());
                         company.writeDepartments();
                         updateDesignations();
+                        addLog(new UserAction(this.user, ActionEnum.CHANGE_VALUE));
                     }
 
                 } else if (insert.getTitle().equals("Funktion hinzufügen")) {
@@ -414,12 +418,14 @@ public class ViewController extends JFrame implements ActionListener {
                         company.getFunctions().add(insert.getInsertField().getText());
                         company.writeFunctions();
                         updateDesignations();
+                        addLog(new UserAction(this.user, ActionEnum.CHANGE_VALUE));
                     }
                 } else if (insert.getTitle().equals("Team hinzufügen")) {
                     if (!company.getTeams().contains(insert.getInsertField().getText())){
                         company.getTeams().add(insert.getInsertField().getText());
                         company.writeTeams();
                         updateDesignations();
+                        addLog(new UserAction(this.user, ActionEnum.CHANGE_VALUE));
                     }
                 }
 
@@ -432,6 +438,7 @@ public class ViewController extends JFrame implements ActionListener {
                                 company.getDepartments().set(i, insert.getInsertField().getText());
                                 company.writeDepartments();
                                 updateDesignations();
+                                addLog(new UserAction(this.user, ActionEnum.CHANGE_VALUE));
                             }
                         }
                     }
@@ -442,6 +449,7 @@ public class ViewController extends JFrame implements ActionListener {
                                 company.getFunctions().set(i, insert.getInsertField().getText());
                                 company.writeFunctions();
                                 updateDesignations();
+                                addLog(new UserAction(this.user, ActionEnum.CHANGE_VALUE));
                             }
                         }
                     }
@@ -452,6 +460,7 @@ public class ViewController extends JFrame implements ActionListener {
                                 company.getTeams().set(i, insert.getInsertField().getText());
                                 company.writeTeams();
                                 updateDesignations();
+                                addLog(new UserAction(this.user, ActionEnum.CHANGE_VALUE));
                             }
                         }
                     }
