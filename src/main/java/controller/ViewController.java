@@ -391,6 +391,13 @@ public class ViewController extends JFrame implements ActionListener {
                 return;
             }
             if (source == functionsPanel.getRemBtn()) {
+                for (int i = 0; i < company.getEmployees().size(); i++){
+                    if (company.getEmployees().get(i).getFunctions().contains(functionsList.getSelectedValue())){
+                        Vector<String> temp = company.getEmployees().get(i).getFunctions();
+                        temp.remove(functionsList.getSelectedValue());
+                        company.getEmployees().get(i).setFunctions(temp);
+                    }
+                }
                 company.getFunctions().remove(functionsList.getSelectedValue());
                 company.writeFunctions();
                 updateDesignations();
@@ -398,6 +405,13 @@ public class ViewController extends JFrame implements ActionListener {
                 return;
             }
             if (source == teamsPanel.getRemBtn()) {
+                for (int i = 0; i < company.getEmployees().size(); i++){
+                    if (company.getEmployees().get(i).getTeams().contains(teamsList.getSelectedValue())){
+                        Vector<String> temp = company.getEmployees().get(i).getTeams();
+                        temp.remove(teamsList.getSelectedValue());
+                        company.getEmployees().get(i).setTeams(temp);
+                    }
+                }
                 company.getTeams().remove(teamsList.getSelectedValue());
                 company.writeTeams();
                 updateDesignations();
@@ -453,6 +467,14 @@ public class ViewController extends JFrame implements ActionListener {
                     for (int i = 0; i < functionsList.getModel().getSize(); i++) {
                         if (functionsList.getModel().getElementAt(i).equals(functionsList.getSelectedValue().toString())) {
                             if (!company.getFunctions().contains(insert.getInsertField().getText())){
+                                for (int h = 0; h < company.getEmployees().size(); h++){
+                                    if (company.getEmployees().get(h).getFunctions().contains(frame.getDataTab().getFunctionsList().getSelectedValue())){
+                                        Vector<String> temp = company.getEmployees().get(h).getFunctions();
+                                        temp.set(h, insert.getInsertField().getText());
+                                        company.getEmployees().get(h).setFunctions(temp);
+
+                                    }
+                                }
                                 company.getFunctions().set(i, insert.getInsertField().getText());
                                 company.writeFunctions();
                                 updateDesignations();
@@ -464,6 +486,14 @@ public class ViewController extends JFrame implements ActionListener {
                     for (int i = 0; i < teamsList.getModel().getSize(); i++) {
                         if (teamsList.getModel().getElementAt(i).equals(dataTab.getTeamsList().getSelectedValue().toString())) {
                             if (!company.getTeams().contains(insert.getInsertField().getText())){
+                                for (int h = 0; h < company.getEmployees().size(); h++){
+                                    if (company.getEmployees().get(h).getTeams().contains(frame.getDataTab().getTeamsList().getSelectedValue())){
+                                        Vector<String> temp = company.getEmployees().get(h).getTeams();
+                                        temp.set(h, insert.getInsertField().getText());
+                                        company.getEmployees().get(h).setTeams(temp);
+
+                                    }
+                                }
                                 company.getTeams().set(i, insert.getInsertField().getText());
                                 company.writeTeams();
                                 updateDesignations();
