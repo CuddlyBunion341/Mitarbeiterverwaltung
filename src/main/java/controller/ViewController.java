@@ -150,7 +150,6 @@ public class ViewController extends JFrame implements ActionListener {
             frame.getAssigmentTab().getEmployeeList().addListSelectionListener(new listSelection2());
         }
 
-
         updateDesignations();
 
         // Namenseingabe
@@ -175,7 +174,7 @@ public class ViewController extends JFrame implements ActionListener {
                     frame.getOverviewTab().getEmployeeList().setListData(company.getEmployees());
                     frame.getOverviewTab().getEmployeeList().updateUI();
                 } else {
-                    Vector<Person> result = new Vector<Person>();
+                    Vector<Person> result = frame.getOverviewTab().getEmployeeList().getModel();
                     for (int i = 0; i < company.getEmployees().size(); i++) {
                         if (company.getEmployees().get(i).getName().toLowerCase(Locale.ROOT)
                                 .contains(frame.getOverviewTab().getNameFilter().getText().toLowerCase(Locale.ROOT))) {
@@ -249,41 +248,34 @@ public class ViewController extends JFrame implements ActionListener {
         OverviewTab overviewTab = frame.getOverviewTab();
         System.out.println(source);
         if (source == overviewTab.getDepartmentFilter() || source == overviewTab.getFunctionFilter()
-                || source == overviewTab.getTeamFilter() || source == overviewTab.getSortNoneRadio() || source == overviewTab.getSortAscRadio() || source == overviewTab.getSortDescRadio()) {
+                || source == overviewTab.getTeamFilter() || source == overviewTab.getSortNoneRadio()
+                || source == overviewTab.getSortAscRadio() || source == overviewTab.getSortDescRadio()) {
             Vector<Person> filtered = new Vector<>(company.getEmployees());
             // Filter nach Department
-            if (source == overviewTab.getDepartmentFilter()) {
-                String selectedDepartment = overviewTab.getDepartmentFilter().getSelectedItem().toString();
-                if (!selectedDepartment.equals("-- alle --")) {
-                    filtered.removeIf(employee -> !employee.getDepartment().equals(selectedDepartment));
-                }
+            String selectedDepartment = overviewTab.getDepartmentFilter().getSelectedItem().toString();
+            if (!selectedDepartment.equals("-- alle --")) {
+                filtered.removeIf(employee -> !employee.getDepartment().equals(selectedDepartment));
             }
 
             // Filter nach Funktion
-            if (source == overviewTab.getFunctionFilter()) {
-                String selectedFunction = overviewTab.getFunctionFilter().getSelectedItem().toString();
-                if (!selectedFunction.equals("-- alle --")) {
+            String selectedFunction = overviewTab.getFunctionFilter().getSelectedItem().toString();
+            if (!selectedFunction.equals("-- alle --")) {
 
-                    filtered.removeIf(employee -> !employee.getFunctions().contains(selectedFunction));
-                }
+                filtered.removeIf(employee -> !employee.getFunctions().contains(selectedFunction));
             }
 
             // Filter nach Team
-            if (source == overviewTab.getTeamFilter()) {
-                String selectedTeam = overviewTab.getTeamFilter().getSelectedItem().toString();
+            String selectedTeam = overviewTab.getTeamFilter().getSelectedItem().toString();
 
-                if (!selectedTeam.equals("-- alle --")) {
+            if (!selectedTeam.equals("-- alle --")) {
 
-                    filtered.removeIf(employee -> !employee.getTeams().contains(selectedTeam));
-                }
+                filtered.removeIf(employee -> !employee.getTeams().contains(selectedTeam));
             }
-
             // sort ascending
-            if (source == overviewTab.getSortAscRadio()) {
+            if (overviewTab.getSortAscRadio().isSelected()) {
                 Collections.sort(filtered);
             }
-            
-            if (source == overviewTab.getSortDescRadio()) {
+            if (overviewTab.getSortDescRadio().isSelected()) {
                 Collections.sort(filtered);
                 Collections.reverse(filtered);
             }
@@ -459,7 +451,8 @@ public class ViewController extends JFrame implements ActionListener {
         public void valueChanged(ListSelectionEvent e) {
             try {
                 Person person = (Person) frame.getOverviewTab().getEmployeeList().getSelectedValue();
-                if (person == null) return;
+                if (person == null)
+                    return;
                 frame.getOverviewTab().getNameField().setText(person.getName());
                 frame.getOverviewTab().getDepartmentField().setText(person.getDepartment());
                 frame.getOverviewTab().getFunctionList().setListData(person.getFunctions());
