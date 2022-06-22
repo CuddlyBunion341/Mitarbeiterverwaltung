@@ -17,9 +17,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Vector;
 
 public class ViewController extends JFrame implements ActionListener {
@@ -96,6 +94,40 @@ public class ViewController extends JFrame implements ActionListener {
         }
     }
 
+    private Vector<Person> filterAndSortEmployees() {
+        Vector<Person> filtered = new Vector<>(company.getEmployees());
+        // Filter nach Department
+        String selectedDepartment = frame.getOverviewTab().getDepartmentFilter().getSelectedItem().toString();
+        if (!selectedDepartment.equals("-- alle --")) {
+            filtered.removeIf(employee -> !employee.getDepartment().equals(selectedDepartment));
+        }
+
+        // Filter nach Funktion
+        String selectedFunction = frame.getOverviewTab().getFunctionFilter().getSelectedItem().toString();
+        if (!selectedFunction.equals("-- alle --")) {
+
+            filtered.removeIf(employee -> !employee.getFunctions().contains(selectedFunction));
+        }
+
+        // Filter nach Team
+        String selectedTeam = frame.getOverviewTab().getTeamFilter().getSelectedItem().toString();
+
+        if (!selectedTeam.equals("-- alle --")) {
+
+            filtered.removeIf(employee -> !employee.getTeams().contains(selectedTeam));
+        }
+        // sort ascending
+        if (frame.getOverviewTab().getSortAscRadio().isSelected()) {
+            Collections.sort(filtered);
+        }
+        if (frame.getOverviewTab().getSortDescRadio().isSelected()) {
+            Collections.sort(filtered);
+            Collections.reverse(filtered);
+        }
+
+        return filtered;
+    }
+
     private void initializeMainFrame(Person person) {
         this.user = person;
         // prepare mainFrame
@@ -165,25 +197,16 @@ public class ViewController extends JFrame implements ActionListener {
             }
 
             private void update(DocumentEvent e) {
-                if (frame.getOverviewTab().getNameFilter().getText().equals("")) {
-                    frame.getOverviewTab().getEmployeeList().setListData(company.getEmployees());
-                    frame.getOverviewTab().getEmployeeList().updateUI();
-                } else {
-                    String nameFilter = frame.getOverviewTab().getNameField().getText().toLowerCase(Locale.ROOT);
-                    Vector<Person> prefiltered = new Vector<>();
-                    for (int i = 0 ; i < frame.getOverviewTab().getEmployeeList().getModel().getSize(); i++) {
-                        prefiltered.add(frame.getOverviewTab().getEmployeeList().getModel().getElementAt(i));
-                    }
-                    prefiltered.removeIf(employee -> !employee.getName().toLowerCase(Locale.ROOT).contains(nameFilter));
-                    frame.getOverviewTab().getEmployeeList().setListData(prefiltered);
-                    frame.getOverviewTab().getEmployeeList().updateUI();
-                }
+                String nameFilter = frame.getOverviewTab().getNameFilter().getText();
+                Vector<Person> prefiltered = filterAndSortEmployees();
+                prefiltered.removeIf(employee -> !employee.getName().toLowerCase().contains(nameFilter));
+                frame.getOverviewTab().getEmployeeList().setListData(prefiltered);
+                frame.getOverviewTab().getEmployeeList().updateUI();
             }
         });
 
         JTextField nameFilter = frame.getOverviewTab().getNameFilter();
         nameFilter.addFocusListener(new FocusListener() {
-
             @Override
             public void focusGained(FocusEvent e) {
                 if (nameFilter.getText().equals("Name eingeben")) {
@@ -244,38 +267,9 @@ public class ViewController extends JFrame implements ActionListener {
         if (source == overviewTab.getDepartmentFilter() || source == overviewTab.getFunctionFilter()
                 || source == overviewTab.getTeamFilter() || source == overviewTab.getSortNoneRadio()
                 || source == overviewTab.getSortAscRadio() || source == overviewTab.getSortDescRadio()) {
-            Vector<Person> filtered = new Vector<>(company.getEmployees());
-            // Filter nach Department
-            String selectedDepartment = overviewTab.getDepartmentFilter().getSelectedItem().toString();
-            if (!selectedDepartment.equals("-- alle --")) {
-                filtered.removeIf(employee -> !employee.getDepartment().equals(selectedDepartment));
-            }
-
-            // Filter nach Funktion
-            String selectedFunction = overviewTab.getFunctionFilter().getSelectedItem().toString();
-            if (!selectedFunction.equals("-- alle --")) {
-
-                filtered.removeIf(employee -> !employee.getFunctions().contains(selectedFunction));
-            }
-
-            // Filter nach Team
-            String selectedTeam = overviewTab.getTeamFilter().getSelectedItem().toString();
-
-            if (!selectedTeam.equals("-- alle --")) {
-
-                filtered.removeIf(employee -> !employee.getTeams().contains(selectedTeam));
-            }
-            // sort ascending
-            if (overviewTab.getSortAscRadio().isSelected()) {
-                Collections.sort(filtered);
-            }
-            if (overviewTab.getSortDescRadio().isSelected()) {
-                Collections.sort(filtered);
-                Collections.reverse(filtered);
-            }
-
-            overviewTab.getEmployeeList().setListData(filtered);
-            overviewTab.getEmployeeList().updateUI();
+            Vector<Person> filtered = filterAndSortEmployees();
+            frame.getOverviewTab().getEmployeeList().setListData(filtered);
+            frame.getOverviewTab().getEmployeeList().updateUI();
         }
 
         EmployeeTab employeeTab;
@@ -285,6 +279,7 @@ public class ViewController extends JFrame implements ActionListener {
             JCheckBox adminBox = employeeTab.getAdminCheckBox();
             // Neuer Mitarbeiter
             if (source == employeeTab.getAddBtn()) {
+                System.out.println("MITARBEITER DA");
                 String[] splited = nameField.getText().split(" ");
                 Person person = new Person(splited[0], splited[1], "");
                 if (employeeTab.getAdminCheckBox().isSelected())
@@ -436,7 +431,6 @@ public class ViewController extends JFrame implements ActionListener {
                     updateDesignations();
                 }
                 addLog(new UserAction(this.user, ActionEnum.UNKNOWN_ACTION));
-                return;
             }
         }
     }
