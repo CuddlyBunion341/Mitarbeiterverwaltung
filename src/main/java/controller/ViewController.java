@@ -171,7 +171,10 @@ public class ViewController extends JFrame implements ActionListener {
                     frame.getOverviewTab().getEmployeeList().updateUI();
                 } else {
                     String nameFilter = frame.getOverviewTab().getNameField().getText().toLowerCase(Locale.ROOT);
-                    Vector<Person> prefiltered = new Vector<Person>((Collection<? extends Person>) frame.getOverviewTab().getEmployeeList().getModel());
+                    Vector<Person> prefiltered = new Vector<>();
+                    for (int i = 0 ; i < frame.getOverviewTab().getEmployeeList().getModel().getSize(); i++) {
+                        prefiltered.add(frame.getOverviewTab().getEmployeeList().getModel().getElementAt(i));
+                    }
                     prefiltered.removeIf(employee -> !employee.getName().toLowerCase(Locale.ROOT).contains(nameFilter));
                     frame.getOverviewTab().getEmployeeList().setListData(prefiltered);
                     frame.getOverviewTab().getEmployeeList().updateUI();
@@ -279,7 +282,6 @@ public class ViewController extends JFrame implements ActionListener {
 
         EmployeeTab employeeTab;
         if ((employeeTab = frame.getEmployeeTab()) != null) {
-
             JTextField nameField = employeeTab.getNameField();
             JCheckBox hrBox = employeeTab.getHrCheckBox();
             JCheckBox adminBox = employeeTab.getAdminCheckBox();
