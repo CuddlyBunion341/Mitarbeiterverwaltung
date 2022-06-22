@@ -113,11 +113,6 @@ public class ViewController extends JFrame implements ActionListener {
         frame.getOverviewTab().getFunctionList().setListData(new Vector<String>());
         frame.getOverviewTab().getTeamList().setListData(new Vector<String>());
 
-        // disable components
-        frame.getOverviewTab().getNameField().setEditable(false);
-        frame.getOverviewTab().getDepartmentField().setEditable(false);
-        frame.getOverviewTab().getSortNoneRadio().setSelected(true);
-
         // addEventListeners
         if (frame.getEmployeeTab() != null) {
             frame.getEmployeeTab().getEmployeeList().setEnabled(false);

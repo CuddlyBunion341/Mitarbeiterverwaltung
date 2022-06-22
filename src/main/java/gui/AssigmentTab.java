@@ -35,6 +35,7 @@ public class AssigmentTab extends JPanel {
     private void init() {
         employeeList = new JList<>(model.getEmployees());
         nameField = new JTextField();
+        nameField.setEditable(false);
         departmentBox = new JComboBox<>(model.getDepartments());
         functionsBox = new JComboBox<>(model.getFunctions());
         teamsBox = new JComboBox<>(model.getTeams());
@@ -74,7 +75,7 @@ public class AssigmentTab extends JPanel {
         return this.nameField;
     }
 
-    public JComboBox getDepartmentBox() {
+    public JComboBox<String> getDepartmentBox() {
         return this.departmentBox;
     }
 

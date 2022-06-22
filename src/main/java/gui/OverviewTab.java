@@ -118,12 +118,15 @@ public class OverviewTab extends JPanel {
         employeeList = new JList<>(model.getEmployees());
         // detail
         nameField = new JTextField();
+        nameField.setEditable(false);
         departmentField = new JTextField();
+        departmentField.setEditable(false);
         functionList = new JList<>();
         teamList = new JList<>();
         imageLabel = new JLabel();
         // radio
         sortNoneRadio = new JRadioButton("keine");
+        sortNoneRadio.setSelected(true);
         sortAscRadio = new JRadioButton("A-Z");
         sortDescRadio = new JRadioButton("Z-A");
     }
