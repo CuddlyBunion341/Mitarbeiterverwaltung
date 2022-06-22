@@ -81,13 +81,11 @@ public class ViewController extends JFrame implements ActionListener {
             frame.getDataTab().getTeamsList().setListData(company.getTeams());
             frame.getDataTab().getTeamsList().updateUI();
         }
+        if (insert != null){
+            insert.setVisible(false);
+            insert.getInsertField().setText("");
+        }
     }
-
-    // public void updateDataGUI(){
-    // updateLists();
-    // insert.setVisible(false);
-    // insert.getInsertField().setText("");
-    // }
 
     private void addLog(UserAction entry) {
         LogBook.getInstance().addEntry(entry);
@@ -392,48 +390,58 @@ public class ViewController extends JFrame implements ActionListener {
             // Department, Team or Function
             if (source == insert.getSubmit()) {
                 if (insert.getTitle().equals("Department hinzufügen")) {
-                    company.getDepartments().add(insert.getInsertField().getText());
-                    company.writeDepartments();
-                    updateDesignations();
+                    if (!company.getDepartments().contains(insert.getInsertField().getText())){
+                        company.getDepartments().add(insert.getInsertField().getText());
+                        company.writeDepartments();
+                        updateDesignations();
+                    }
+
                 } else if (insert.getTitle().equals("Funktion hinzufügen")) {
-                    company.getFunctions().add(insert.getInsertField().getText());
-                    company.writeFunctions();
-                    updateDesignations();
+                    if (!company.getFunctions().contains(insert.getInsertField().getText())){
+                        company.getFunctions().add(insert.getInsertField().getText());
+                        company.writeFunctions();
+                        updateDesignations();
+                    }
                 } else if (insert.getTitle().equals("Team hinzufügen")) {
-                    company.getTeams().add(insert.getInsertField().getText());
-                    company.writeTeams();
-                    updateDesignations();
+                    if (!company.getTeams().contains(insert.getInsertField().getText())){
+                        company.getTeams().add(insert.getInsertField().getText());
+                        company.writeTeams();
+                        updateDesignations();
+                    }
                 }
 
                 // ____________
 
                 else if (insert.getTitle().equals("Department bearbeiten")) {
                     for (int i = 0; i < dataTab.getDepartmentList().getModel().getSize(); i++) {
-                        if (departmentList.getModel().getElementAt(i)
-                                .equals(departmentList.getSelectedValue().toString())) {
-                            company.getDepartments().set(i, insert.getInsertField().getText());
+                        if (departmentList.getModel().getElementAt(i).equals(departmentList.getSelectedValue().toString())) {
+                            if (!company.getDepartments().contains(insert.getInsertField().getText())){
+                                company.getDepartments().set(i, insert.getInsertField().getText());
+                                company.writeDepartments();
+                                updateDesignations();
+                            }
                         }
                     }
-                    company.writeDepartments();
-                    updateDesignations();
                 } else if (insert.getTitle().equals("Funktion bearbeiten")) {
                     for (int i = 0; i < functionsList.getModel().getSize(); i++) {
-                        if (functionsList.getModel().getElementAt(i)
-                                .equals(functionsList.getSelectedValue().toString())) {
-                            company.getFunctions().set(i, insert.getInsertField().getText());
+                        if (functionsList.getModel().getElementAt(i).equals(functionsList.getSelectedValue().toString())) {
+                            if (!company.getFunctions().contains(insert.getInsertField().getText())){
+                                company.getFunctions().set(i, insert.getInsertField().getText());
+                                company.writeFunctions();
+                                updateDesignations();
+                            }
                         }
                     }
-                    company.writeFunctions();
-                    updateDesignations();
                 } else if (insert.getTitle().equals("Team bearbeitenn")) {
                     for (int i = 0; i < teamsList.getModel().getSize(); i++) {
-                        if (teamsList.getModel().getElementAt(i)
-                                .equals(dataTab.getTeamsList().getSelectedValue().toString())) {
-                            company.getTeams().set(i, insert.getInsertField().getText());
+                        if (teamsList.getModel().getElementAt(i).equals(dataTab.getTeamsList().getSelectedValue().toString())) {
+                            if (!company.getTeams().contains(insert.getInsertField().getText())){
+                                company.getTeams().set(i, insert.getInsertField().getText());
+                                company.writeTeams();
+                                updateDesignations();
+                            }
                         }
                     }
-                    company.writeTeams();
-                    updateDesignations();
                 }
                 addLog(new UserAction(this.user, ActionEnum.UNKNOWN_ACTION));
                 return;
