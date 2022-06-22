@@ -467,6 +467,7 @@ public class ViewController extends JFrame implements ActionListener {
                     for (int i = 0; i < functionsList.getModel().getSize(); i++) {
                         if (functionsList.getModel().getElementAt(i).equals(functionsList.getSelectedValue().toString())) {
                             if (!company.getFunctions().contains(insert.getInsertField().getText())){
+                                /*
                                 for (int h = 0; h < company.getEmployees().size(); h++){
                                     if (company.getEmployees().get(h).getFunctions().contains(frame.getDataTab().getFunctionsList().getSelectedValue())){
                                         Vector<String> temp = company.getEmployees().get(h).getFunctions();
@@ -475,6 +476,7 @@ public class ViewController extends JFrame implements ActionListener {
 
                                     }
                                 }
+                                 */
                                 company.getFunctions().set(i, insert.getInsertField().getText());
                                 company.writeFunctions();
                                 updateDesignations();
@@ -486,6 +488,7 @@ public class ViewController extends JFrame implements ActionListener {
                     for (int i = 0; i < teamsList.getModel().getSize(); i++) {
                         if (teamsList.getModel().getElementAt(i).equals(dataTab.getTeamsList().getSelectedValue().toString())) {
                             if (!company.getTeams().contains(insert.getInsertField().getText())){
+                                /*
                                 for (int h = 0; h < company.getEmployees().size(); h++){
                                     if (company.getEmployees().get(h).getTeams().contains(frame.getDataTab().getTeamsList().getSelectedValue())){
                                         Vector<String> temp = company.getEmployees().get(h).getTeams();
@@ -494,6 +497,7 @@ public class ViewController extends JFrame implements ActionListener {
 
                                     }
                                 }
+                                 */
                                 company.getTeams().set(i, insert.getInsertField().getText());
                                 company.writeTeams();
                                 updateDesignations();
