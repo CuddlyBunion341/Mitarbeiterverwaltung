@@ -115,7 +115,6 @@ public class ViewController extends JFrame implements ActionListener {
 
         // addEventListeners
         if (frame.getEmployeeTab() != null) {
-            frame.getEmployeeTab().getEmployeeList().setEnabled(false);
             frame.getEmployeeTab().getDelBtn().addActionListener(this);
             frame.getEmployeeTab().getAddBtn().addActionListener(this);
             frame.getEmployeeTab().getEditBtn().addActionListener(this);
@@ -274,12 +273,10 @@ public class ViewController extends JFrame implements ActionListener {
 
             overviewTab.getEmployeeList().setListData(filtered);
             overviewTab.getEmployeeList().updateUI();
-            return;
         }
 
         EmployeeTab employeeTab;
         if ((employeeTab = frame.getEmployeeTab()) != null) {
-
             JTextField nameField = employeeTab.getNameField();
             JCheckBox hrBox = employeeTab.getHrCheckBox();
             JCheckBox adminBox = employeeTab.getAdminCheckBox();
@@ -316,6 +313,9 @@ public class ViewController extends JFrame implements ActionListener {
             }
 
             // Mitarbeiter bearbeiten
+            if (source == employeeTab.getEditBtn()){
+
+            }
 
         }
         DataTab dataTab;
