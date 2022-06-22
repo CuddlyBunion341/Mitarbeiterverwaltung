@@ -379,6 +379,11 @@ public class ViewController extends JFrame implements ActionListener {
 
             // Delete
             if (source == departmentPanel.getRemBtn()) {
+                for (int i = 0; i < company.getEmployees().size(); i++){
+                    if (company.getEmployees().get(i).getDepartment().equals(departmentList.getSelectedValue())){
+                        company.getEmployees().get(i).setDepartment("not assigned");
+                    }
+                }
                 company.getDepartments().remove(departmentList.getSelectedValue());
                 company.writeDepartments();
                 updateDesignations();
@@ -432,6 +437,11 @@ public class ViewController extends JFrame implements ActionListener {
                     for (int i = 0; i < dataTab.getDepartmentList().getModel().getSize(); i++) {
                         if (departmentList.getModel().getElementAt(i).equals(departmentList.getSelectedValue().toString())) {
                             if (!company.getDepartments().contains(insert.getInsertField().getText())){
+                                for (int h = 0; h < company.getEmployees().size(); h++){
+                                    if (company.getEmployees().get(i).getDepartment().equals(departmentList.getSelectedValue().toString())){
+                                        company.getEmployees().get(i).setDepartment(insert.getInsertField().getText());
+                                    }
+                                }
                                 company.getDepartments().set(i, insert.getInsertField().getText());
                                 company.writeDepartments();
                                 updateDesignations();
