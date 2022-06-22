@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
-import javax.swing.Action;
-
 import main.java.model.company.Person;
 
 /**
@@ -41,6 +39,10 @@ public class LogBook {
         readFile();
     }
 
+    /**
+     * Returns the instance of the LogBook.
+     * @return LogBook instance.
+     */
     public static LogBook getInstance() {
         if (instance == null) {
             instance = new LogBook();
@@ -48,11 +50,18 @@ public class LogBook {
         return instance;
     }
 
+    /**
+     * Adds a new entry to the logbook.
+     * @param entry Entry to add.
+     */
     public void addEntry(UserAction entry) {
         entries.add(entry.toString());
         writeFile();
     }
 
+    /**
+     * Closes the file.
+     */
     public void closeFile() {
         try {
             writer.close();
@@ -61,14 +70,24 @@ public class LogBook {
         }
     }
 
+    /**
+     * Prints all entries to the console.
+     */
     public void printLog() {
         entries.forEach(entry -> System.out.println(entry));
     }
 
+    /**
+     * Reads the file and adds all entries to the vector.
+     * @return Vector of all entries.
+     */
     public Vector<String> getEntries() {
         return entries;
     }
 
+    /**
+     * Appends latest entries to the file.
+     */
     private void writeFile() {
         try {
             writer.write(entries.get(entries.size() - 1));
@@ -78,6 +97,9 @@ public class LogBook {
         }
     }
 
+    /**
+     * Reads the file and adds all entries to the vector.
+     */
     private void readFile() {
         try (Scanner sc = new Scanner(new FileReader(path))) {
             while (sc.hasNextLine()) {
@@ -89,6 +111,9 @@ public class LogBook {
         }
     }
 
+    /**
+     * Returns the logbook contents as string.
+     */
     public String toString() {
         String log = "";
         for (String entry : entries) {

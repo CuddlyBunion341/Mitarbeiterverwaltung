@@ -41,6 +41,10 @@ public class OverviewTab extends JPanel {
 
     private Company model;
     
+    /**
+     * Constructor for the OverviewTab.
+     * @param model Company model.
+     */
     public OverviewTab(Company model) {
         super();
         this.model = model;

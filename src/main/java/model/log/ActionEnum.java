@@ -1,5 +1,9 @@
 package main.java.model.log;
 
+/**
+ * Enum for the different actions that can be performed.
+ * @author Daniel Bengl
+ */
 public enum ActionEnum {
     CREATE_PERSON(0),
     CHANGE_VALUE(1),
@@ -15,5 +19,9 @@ public enum ActionEnum {
         this.number = number;
     }
 
+    /**
+     * Returns the action number
+     * @return Action number
+     */
     public int number() { return number; }
 }
